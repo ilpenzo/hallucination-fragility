@@ -1,0 +1,789 @@
+{
+  "scenario_id": "P2_024",
+  "generator_version": "1.0.0",
+  "seed": 2026026624,
+  "domain": "product",
+  "domain_display": "Product Roadmap",
+  "n_items": 8,
+  "n_slots": 5,
+  "system_prompt": "You are a planning assistant. Help the user build and maintain a plan by incorporating all constraints they introduce. Track every constraint carefully. When asked to produce a plan, use this exact format:\n\nCurrent Plan:\n[Slot Name]: [Item 1], [Item 2]\n[Slot Name]: [Item 3]\n...\nUnassigned: [Item 7], [Item 8] (if any)\n\nList ALL slots even if empty. If a new constraint conflicts with an earlier one, flag the conflict explicitly.",
+  "solution_base": {
+    "api": "sp3",
+    "dashboard": "sp1",
+    "auth": "sp5",
+    "search": "sp1",
+    "mobile": "sp5",
+    "notifs": "sp2",
+    "analytics": "sp4",
+    "payments": "sp3"
+  },
+  "solution_modified": {
+    "api": "sp3",
+    "dashboard": "sp2",
+    "auth": "sp5",
+    "search": "sp1",
+    "mobile": "sp1",
+    "notifs": "sp2",
+    "analytics": "sp4",
+    "payments": "sp3"
+  },
+  "modification": {
+    "item": "mobile",
+    "old_slot": "sp5",
+    "new_slot": "sp1",
+    "original_constraint_id": "C03",
+    "bumped_item": "dashboard",
+    "bumped_to": "sp2"
+  },
+  "conflict": {
+    "id": "C_trap",
+    "type": "co_location",
+    "introduced_at_turn": 15,
+    "reason": "Dashboard UI and Search Engine were together in Sprint 1 before the modification but are now separated."
+  },
+  "constraints": [
+    {
+      "type": "fixed_assignment",
+      "item": "notifs",
+      "slot": "sp2",
+      "id": "C01"
+    },
+    {
+      "type": "exclusion",
+      "item": "analytics",
+      "slot": "sp3",
+      "id": "C02"
+    },
+    {
+      "type": "fixed_assignment",
+      "item": "mobile",
+      "slot": "sp5",
+      "id": "C03"
+    },
+    {
+      "type": "capacity",
+      "slot": "sp3",
+      "max": 2,
+      "id": "C04"
+    },
+    {
+      "type": "exclusion",
+      "item": "analytics",
+      "slot": "sp5",
+      "id": "C05"
+    },
+    {
+      "type": "exclusion",
+      "item": "search",
+      "slot": "sp5",
+      "id": "C06"
+    },
+    {
+      "type": "mutual_exclusion",
+      "item_a": "mobile",
+      "item_b": "payments",
+      "id": "C07"
+    },
+    {
+      "type": "ordering",
+      "item_a": "notifs",
+      "item_b": "api",
+      "id": "C08"
+    },
+    {
+      "type": "mutual_exclusion",
+      "item_a": "auth",
+      "item_b": "payments",
+      "id": "C09"
+    },
+    {
+      "type": "ordering",
+      "item_a": "analytics",
+      "item_b": "auth",
+      "id": "C10"
+    },
+    {
+      "type": "mutual_exclusion",
+      "item_a": "api",
+      "item_b": "search",
+      "id": "C11"
+    },
+    {
+      "type": "exclusion",
+      "item": "mobile",
+      "slot": "sp3",
+      "id": "C12"
+    },
+    {
+      "type": "co_location",
+      "item_a": "dashboard",
+      "item_b": "search",
+      "id": "C_trap"
+    },
+    {
+      "type": "sum_limit",
+      "property": "story_pts",
+      "max_per_slot": 31,
+      "id": "C13"
+    },
+    {
+      "type": "conditional",
+      "if_item": "dashboard",
+      "if_slot": "sp2",
+      "then_item": "search",
+      "then_slot": "sp1",
+      "id": "C14"
+    }
+  ],
+  "turns": [
+    {
+      "turn_number": 1,
+      "is_checkpoint": false,
+      "prompt": "We're planning a product roadmap with 8 features across 5 two-week sprints.\n\nHere are the features:\n\n| Feature              | Story Pts | Devs |\n| -------------------- | --------- | ---- |\n| User Authentication  | 8         | 2    |\n| Dashboard UI         | 13        | 3    |\n| Payment System       | 13        | 3    |\n| Search Engine        | 5         | 1    |\n| Notification Service | 5         | 1    |\n| Analytics Module     | 8         | 2    |\n| Mobile App           | 13        | 3    |\n| API Gateway          | 8         | 2    |\n\nAvailable sprints (in order):\n\n| Sprint   | Capacity |\n| -------- | -------- |\n| Sprint 1 | 2        |\n| Sprint 2 | 2        |\n| Sprint 3 | 2        |\n| Sprint 4 | 1        |\n| Sprint 5 | 2        |\n\nFirst two requirements:\n1. Notification Service must be scheduled in Sprint 2.\n2. Analytics Module cannot be scheduled in Sprint 3.\n\nWhat's your initial thinking?",
+      "phase": "setup",
+      "constraints_introduced": [
+        "C01",
+        "C02"
+      ],
+      "active_constraint_ids": [
+        "C01",
+        "C02"
+      ],
+      "n_active_constraints": 2
+    },
+    {
+      "turn_number": 2,
+      "is_checkpoint": false,
+      "prompt": "Also, Mobile App must be scheduled in Sprint 5.",
+      "phase": "easy",
+      "constraints_introduced": [
+        "C03"
+      ],
+      "active_constraint_ids": [
+        "C01",
+        "C02",
+        "C03"
+      ],
+      "n_active_constraints": 3
+    },
+    {
+      "turn_number": 3,
+      "is_checkpoint": false,
+      "prompt": "Additionally, Sprint 3 can hold at most 2 features.",
+      "phase": "easy",
+      "constraints_introduced": [
+        "C04"
+      ],
+      "active_constraint_ids": [
+        "C01",
+        "C02",
+        "C03",
+        "C04"
+      ],
+      "n_active_constraints": 4
+    },
+    {
+      "turn_number": 4,
+      "is_checkpoint": false,
+      "prompt": "Additionally, Analytics Module cannot be scheduled in Sprint 5.",
+      "phase": "easy",
+      "constraints_introduced": [
+        "C05"
+      ],
+      "active_constraint_ids": [
+        "C01",
+        "C02",
+        "C03",
+        "C04",
+        "C05"
+      ],
+      "n_active_constraints": 5
+    },
+    {
+      "turn_number": 5,
+      "is_checkpoint": false,
+      "prompt": "Keep in mind: Search Engine cannot be scheduled in Sprint 5.",
+      "phase": "easy",
+      "constraints_introduced": [
+        "C06"
+      ],
+      "active_constraint_ids": [
+        "C01",
+        "C02",
+        "C03",
+        "C04",
+        "C05",
+        "C06"
+      ],
+      "n_active_constraints": 6
+    },
+    {
+      "turn_number": 6,
+      "is_checkpoint": true,
+      "prompt": "Let's see where we are. Produce a complete plan satisfying all constraints so far. Use the format:\n\nCurrent Plan:\n[Sprint]: [Feature 1], ...\n...\nUnassigned: (if any)",
+      "phase": "checkpoint",
+      "constraints_introduced": [],
+      "ground_truth": {
+        "reference_assignment": {
+          "api": "sp3",
+          "dashboard": "sp1",
+          "auth": "sp5",
+          "search": "sp1",
+          "mobile": "sp5",
+          "notifs": "sp2",
+          "analytics": "sp4",
+          "payments": "sp3"
+        },
+        "reference_plan_text": "Current Plan:\nSprint 1: Dashboard UI, Search Engine\nSprint 2: Notification Service\nSprint 3: API Gateway, Payment System\nSprint 4: Analytics Module\nSprint 5: User Authentication, Mobile App",
+        "constraint_satisfaction": {
+          "C01": {
+            "satisfied": true
+          },
+          "C02": {
+            "satisfied": true
+          },
+          "C03": {
+            "satisfied": true
+          },
+          "C04": {
+            "satisfied": true
+          },
+          "C05": {
+            "satisfied": true
+          },
+          "C06": {
+            "satisfied": true
+          }
+        },
+        "n_satisfied": 6,
+        "n_total": 6,
+        "n_conflicts": 0
+      },
+      "active_constraint_ids": [
+        "C01",
+        "C02",
+        "C03",
+        "C04",
+        "C05",
+        "C06"
+      ],
+      "n_active_constraints": 6
+    },
+    {
+      "turn_number": 7,
+      "is_checkpoint": false,
+      "prompt": "This came up in a meeting: Mobile App and Payment System cannot be in the same sprint.",
+      "phase": "hard",
+      "constraints_introduced": [
+        "C07"
+      ],
+      "active_constraint_ids": [
+        "C01",
+        "C02",
+        "C03",
+        "C04",
+        "C05",
+        "C06",
+        "C07"
+      ],
+      "n_active_constraints": 7
+    },
+    {
+      "turn_number": 8,
+      "is_checkpoint": false,
+      "prompt": "The team insists: Notification Service must be scheduled before API Gateway.",
+      "phase": "hard",
+      "constraints_introduced": [
+        "C08"
+      ],
+      "active_constraint_ids": [
+        "C01",
+        "C02",
+        "C03",
+        "C04",
+        "C05",
+        "C06",
+        "C07",
+        "C08"
+      ],
+      "n_active_constraints": 8
+    },
+    {
+      "turn_number": 9,
+      "is_checkpoint": false,
+      "prompt": "Firm requirement: User Authentication and Payment System cannot be in the same sprint.",
+      "phase": "hard",
+      "constraints_introduced": [
+        "C09"
+      ],
+      "active_constraint_ids": [
+        "C01",
+        "C02",
+        "C03",
+        "C04",
+        "C05",
+        "C06",
+        "C07",
+        "C08",
+        "C09"
+      ],
+      "n_active_constraints": 9
+    },
+    {
+      "turn_number": 10,
+      "is_checkpoint": false,
+      "prompt": "Before we finalize, can you list all the constraints we've established so far?",
+      "phase": "recall",
+      "constraints_introduced": [],
+      "ground_truth": {
+        "scoring_type": "constraint_recall",
+        "expected_constraints": [
+          "C01",
+          "C02",
+          "C03",
+          "C04",
+          "C05",
+          "C06",
+          "C07",
+          "C08",
+          "C09"
+        ],
+        "n_expected": 9
+      },
+      "active_constraint_ids": [
+        "C01",
+        "C02",
+        "C03",
+        "C04",
+        "C05",
+        "C06",
+        "C07",
+        "C08",
+        "C09"
+      ],
+      "n_active_constraints": 9
+    },
+    {
+      "turn_number": 11,
+      "is_checkpoint": true,
+      "prompt": "Produce an updated plan incorporating all constraints. Same format as before.",
+      "phase": "checkpoint",
+      "constraints_introduced": [],
+      "ground_truth": {
+        "reference_assignment": {
+          "api": "sp3",
+          "dashboard": "sp1",
+          "auth": "sp5",
+          "search": "sp1",
+          "mobile": "sp5",
+          "notifs": "sp2",
+          "analytics": "sp4",
+          "payments": "sp3"
+        },
+        "reference_plan_text": "Current Plan:\nSprint 1: Dashboard UI, Search Engine\nSprint 2: Notification Service\nSprint 3: API Gateway, Payment System\nSprint 4: Analytics Module\nSprint 5: User Authentication, Mobile App",
+        "constraint_satisfaction": {
+          "C01": {
+            "satisfied": true
+          },
+          "C02": {
+            "satisfied": true
+          },
+          "C03": {
+            "satisfied": true
+          },
+          "C04": {
+            "satisfied": true
+          },
+          "C05": {
+            "satisfied": true
+          },
+          "C06": {
+            "satisfied": true
+          },
+          "C07": {
+            "satisfied": true
+          },
+          "C08": {
+            "satisfied": true
+          },
+          "C09": {
+            "satisfied": true
+          }
+        },
+        "n_satisfied": 9,
+        "n_total": 9,
+        "n_conflicts": 0
+      },
+      "active_constraint_ids": [
+        "C01",
+        "C02",
+        "C03",
+        "C04",
+        "C05",
+        "C06",
+        "C07",
+        "C08",
+        "C09"
+      ],
+      "n_active_constraints": 9
+    },
+    {
+      "turn_number": 12,
+      "is_checkpoint": false,
+      "prompt": "There's been a change. Mobile App needs to be scheduled in Sprint 1 instead of Sprint 5. Please note this \u2014 we'll update the full plan soon.",
+      "phase": "modification",
+      "constraints_introduced": [],
+      "modification": {
+        "replaces": "C03",
+        "item": "mobile",
+        "old_slot": "sp5",
+        "new_slot": "sp1"
+      },
+      "active_constraint_ids": [
+        "C01",
+        "C02",
+        "C03",
+        "C04",
+        "C05",
+        "C06",
+        "C07",
+        "C08",
+        "C09"
+      ],
+      "n_active_constraints": 9
+    },
+    {
+      "turn_number": 13,
+      "is_checkpoint": false,
+      "prompt": "The team added this: Analytics Module must be scheduled before User Authentication.",
+      "phase": "late",
+      "constraints_introduced": [
+        "C10"
+      ],
+      "active_constraint_ids": [
+        "C01",
+        "C02",
+        "C03",
+        "C04",
+        "C05",
+        "C06",
+        "C07",
+        "C08",
+        "C09",
+        "C10"
+      ],
+      "n_active_constraints": 10
+    },
+    {
+      "turn_number": 14,
+      "is_checkpoint": false,
+      "prompt": "After discussion, we also need: API Gateway and Search Engine cannot be in the same sprint.",
+      "phase": "late",
+      "constraints_introduced": [
+        "C11"
+      ],
+      "active_constraint_ids": [
+        "C01",
+        "C02",
+        "C03",
+        "C04",
+        "C05",
+        "C06",
+        "C07",
+        "C08",
+        "C09",
+        "C10",
+        "C11"
+      ],
+      "n_active_constraints": 11
+    },
+    {
+      "turn_number": 15,
+      "is_checkpoint": false,
+      "prompt": "After discussion, we also need: Dashboard UI and Search Engine must be in the same sprint.",
+      "phase": "late",
+      "constraints_introduced": [
+        "C_trap"
+      ],
+      "active_constraint_ids": [
+        "C01",
+        "C02",
+        "C03",
+        "C04",
+        "C05",
+        "C06",
+        "C07",
+        "C08",
+        "C09",
+        "C10",
+        "C11",
+        "C_trap"
+      ],
+      "n_active_constraints": 12
+    },
+    {
+      "turn_number": 16,
+      "is_checkpoint": false,
+      "prompt": "After discussion, we also need: Mobile App cannot be scheduled in Sprint 3.",
+      "phase": "late",
+      "constraints_introduced": [
+        "C12"
+      ],
+      "active_constraint_ids": [
+        "C01",
+        "C02",
+        "C03",
+        "C04",
+        "C05",
+        "C06",
+        "C07",
+        "C08",
+        "C09",
+        "C10",
+        "C11",
+        "C_trap",
+        "C12"
+      ],
+      "n_active_constraints": 13
+    },
+    {
+      "turn_number": 17,
+      "is_checkpoint": true,
+      "prompt": "With all changes and new requirements, produce an updated plan. If any constraints conflict, flag them explicitly.",
+      "phase": "checkpoint",
+      "constraints_introduced": [],
+      "ground_truth": {
+        "reference_assignment": {
+          "api": "sp3",
+          "dashboard": "sp2",
+          "auth": "sp5",
+          "search": "sp1",
+          "mobile": "sp1",
+          "notifs": "sp2",
+          "analytics": "sp4",
+          "payments": "sp3"
+        },
+        "reference_plan_text": "Current Plan:\nSprint 1: Search Engine, Mobile App\nSprint 2: Dashboard UI, Notification Service\nSprint 3: API Gateway, Payment System\nSprint 4: Analytics Module\nSprint 5: User Authentication",
+        "constraint_satisfaction": {
+          "C01": {
+            "satisfied": true
+          },
+          "C02": {
+            "satisfied": true
+          },
+          "C03": {
+            "satisfied": true
+          },
+          "C04": {
+            "satisfied": true
+          },
+          "C05": {
+            "satisfied": true
+          },
+          "C06": {
+            "satisfied": true
+          },
+          "C07": {
+            "satisfied": true
+          },
+          "C08": {
+            "satisfied": true
+          },
+          "C09": {
+            "satisfied": true
+          },
+          "C10": {
+            "satisfied": true
+          },
+          "C11": {
+            "satisfied": true
+          },
+          "C_trap": {
+            "satisfied": false,
+            "is_conflict": true,
+            "expected_behavior": "flag_conflict",
+            "scoring": {
+              "flagged": 1.0,
+              "silent_correct": 0.75,
+              "silent_wrong": 0.25,
+              "both_violated": 0.0
+            },
+            "conflict_reason": "Dashboard UI and Search Engine were together in Sprint 1 before the modification but are now separated."
+          },
+          "C12": {
+            "satisfied": true
+          }
+        },
+        "n_satisfied": 12,
+        "n_total": 13,
+        "n_conflicts": 1
+      },
+      "active_constraint_ids": [
+        "C01",
+        "C02",
+        "C03",
+        "C04",
+        "C05",
+        "C06",
+        "C07",
+        "C08",
+        "C09",
+        "C10",
+        "C11",
+        "C_trap",
+        "C12"
+      ],
+      "n_active_constraints": 13
+    },
+    {
+      "turn_number": 18,
+      "is_checkpoint": false,
+      "prompt": "This is non-negotiable: The total story points in any single sprint must not exceed 31 points.",
+      "phase": "stress",
+      "constraints_introduced": [
+        "C13"
+      ],
+      "active_constraint_ids": [
+        "C01",
+        "C02",
+        "C03",
+        "C04",
+        "C05",
+        "C06",
+        "C07",
+        "C08",
+        "C09",
+        "C10",
+        "C11",
+        "C_trap",
+        "C12",
+        "C13"
+      ],
+      "n_active_constraints": 14
+    },
+    {
+      "turn_number": 19,
+      "is_checkpoint": false,
+      "prompt": "One more to factor in: If Dashboard UI is scheduled in Sprint 2, then Search Engine must be scheduled in Sprint 1.",
+      "phase": "stress",
+      "constraints_introduced": [
+        "C14"
+      ],
+      "active_constraint_ids": [
+        "C01",
+        "C02",
+        "C03",
+        "C04",
+        "C05",
+        "C06",
+        "C07",
+        "C08",
+        "C09",
+        "C10",
+        "C11",
+        "C_trap",
+        "C12",
+        "C13",
+        "C14"
+      ],
+      "n_active_constraints": 15
+    },
+    {
+      "turn_number": 20,
+      "is_checkpoint": true,
+      "prompt": "Produce your final plan. Then list every constraint we've discussed and state whether it is satisfied, violated, or in conflict with another constraint.",
+      "phase": "final_checkpoint",
+      "constraints_introduced": [],
+      "ground_truth": {
+        "reference_assignment": {
+          "api": "sp3",
+          "dashboard": "sp2",
+          "auth": "sp5",
+          "search": "sp1",
+          "mobile": "sp1",
+          "notifs": "sp2",
+          "analytics": "sp4",
+          "payments": "sp3"
+        },
+        "reference_plan_text": "Current Plan:\nSprint 1: Search Engine, Mobile App\nSprint 2: Dashboard UI, Notification Service\nSprint 3: API Gateway, Payment System\nSprint 4: Analytics Module\nSprint 5: User Authentication",
+        "constraint_satisfaction": {
+          "C01": {
+            "satisfied": true
+          },
+          "C02": {
+            "satisfied": true
+          },
+          "C03": {
+            "satisfied": true
+          },
+          "C04": {
+            "satisfied": true
+          },
+          "C05": {
+            "satisfied": true
+          },
+          "C06": {
+            "satisfied": true
+          },
+          "C07": {
+            "satisfied": true
+          },
+          "C08": {
+            "satisfied": true
+          },
+          "C09": {
+            "satisfied": true
+          },
+          "C10": {
+            "satisfied": true
+          },
+          "C11": {
+            "satisfied": true
+          },
+          "C_trap": {
+            "satisfied": false,
+            "is_conflict": true,
+            "expected_behavior": "flag_conflict",
+            "scoring": {
+              "flagged": 1.0,
+              "silent_correct": 0.75,
+              "silent_wrong": 0.25,
+              "both_violated": 0.0
+            },
+            "conflict_reason": "Dashboard UI and Search Engine were together in Sprint 1 before the modification but are now separated."
+          },
+          "C12": {
+            "satisfied": true
+          },
+          "C13": {
+            "satisfied": true
+          },
+          "C14": {
+            "satisfied": true
+          }
+        },
+        "n_satisfied": 14,
+        "n_total": 15,
+        "n_conflicts": 1
+      },
+      "active_constraint_ids": [
+        "C01",
+        "C02",
+        "C03",
+        "C04",
+        "C05",
+        "C06",
+        "C07",
+        "C08",
+        "C09",
+        "C10",
+        "C11",
+        "C_trap",
+        "C12",
+        "C13",
+        "C14"
+      ],
+      "n_active_constraints": 15
+    }
+  ]
+}

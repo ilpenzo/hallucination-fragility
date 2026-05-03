@@ -1,0 +1,789 @@
+{
+  "scenario_id": "P2_030",
+  "generator_version": "1.0.0",
+  "seed": 2026026630,
+  "domain": "hiring",
+  "domain_display": "Hiring Pipeline",
+  "n_items": 8,
+  "n_slots": 5,
+  "system_prompt": "You are a planning assistant. Help the user build and maintain a plan by incorporating all constraints they introduce. Track every constraint carefully. When asked to produce a plan, use this exact format:\n\nCurrent Plan:\n[Slot Name]: [Item 1], [Item 2]\n[Slot Name]: [Item 3]\n...\nUnassigned: [Item 7], [Item 8] (if any)\n\nList ALL slots even if empty. If a new constraint conflicts with an earlier one, flag the conflict explicitly.",
+  "solution_base": {
+    "david": "wk3",
+    "elena": "wk1",
+    "hasan": "wk2",
+    "grace": "wk5",
+    "carol": "wk3",
+    "bob": "wk5",
+    "alice": "wk1",
+    "frank": "wk4"
+  },
+  "solution_modified": {
+    "david": "wk3",
+    "elena": "wk4",
+    "hasan": "wk2",
+    "grace": "wk5",
+    "carol": "wk3",
+    "bob": "wk5",
+    "alice": "wk1",
+    "frank": "wk1"
+  },
+  "modification": {
+    "item": "elena",
+    "old_slot": "wk1",
+    "new_slot": "wk4",
+    "original_constraint_id": "C04",
+    "bumped_item": "frank",
+    "bumped_to": "wk1"
+  },
+  "conflict": {
+    "id": "C_trap",
+    "type": "co_location",
+    "introduced_at_turn": 15,
+    "reason": "Elena Volkov and Alice Chen were together in Week 1 before the modification but are now separated."
+  },
+  "constraints": [
+    {
+      "type": "fixed_assignment",
+      "item": "hasan",
+      "slot": "wk2",
+      "id": "C01"
+    },
+    {
+      "type": "exclusion",
+      "item": "bob",
+      "slot": "wk4",
+      "id": "C02"
+    },
+    {
+      "type": "exclusion",
+      "item": "grace",
+      "slot": "wk4",
+      "id": "C03"
+    },
+    {
+      "type": "fixed_assignment",
+      "item": "elena",
+      "slot": "wk1",
+      "id": "C04"
+    },
+    {
+      "type": "capacity",
+      "slot": "wk2",
+      "max": 1,
+      "id": "C05"
+    },
+    {
+      "type": "exclusion",
+      "item": "david",
+      "slot": "wk1",
+      "id": "C06"
+    },
+    {
+      "type": "mutual_exclusion",
+      "item_a": "grace",
+      "item_b": "david",
+      "id": "C07"
+    },
+    {
+      "type": "mutual_exclusion",
+      "item_a": "grace",
+      "item_b": "elena",
+      "id": "C08"
+    },
+    {
+      "type": "ordering",
+      "item_a": "frank",
+      "item_b": "bob",
+      "id": "C09"
+    },
+    {
+      "type": "mutual_exclusion",
+      "item_a": "david",
+      "item_b": "alice",
+      "id": "C10"
+    },
+    {
+      "type": "exclusion",
+      "item": "frank",
+      "slot": "wk3",
+      "id": "C11"
+    },
+    {
+      "type": "ordering",
+      "item_a": "david",
+      "item_b": "grace",
+      "id": "C12"
+    },
+    {
+      "type": "co_location",
+      "item_a": "elena",
+      "item_b": "alice",
+      "id": "C_trap"
+    },
+    {
+      "type": "sum_limit",
+      "property": "salary_k",
+      "max_per_slot": 235,
+      "id": "C13"
+    },
+    {
+      "type": "conditional",
+      "if_item": "hasan",
+      "if_slot": "wk2",
+      "then_item": "bob",
+      "then_slot": "wk5",
+      "id": "C14"
+    }
+  ],
+  "turns": [
+    {
+      "turn_number": 1,
+      "is_checkpoint": false,
+      "prompt": "We're organizing interviews for 8 candidates across 5 weeks.\n\nHere are the candidates:\n\n| Candidate    | Salary(K$) | Exp(yrs) |\n| ------------ | ---------- | -------- |\n| Alice Chen   | 130        | 8        |\n| Bob Kumar    | 95         | 4        |\n| Carol Santos | 110        | 6        |\n| David Park   | 85         | 3        |\n| Elena Volkov | 145        | 12       |\n| Frank Osei   | 100        | 5        |\n| Grace Liu    | 120        | 7        |\n| Hasan Ali    | 90         | 3        |\n\nAvailable interview weeks (in order):\n\n| Interview Week | Capacity |\n| -------------- | -------- |\n| Week 1         | 2        |\n| Week 2         | 2        |\n| Week 3         | 2        |\n| Week 4         | 1        |\n| Week 5         | 2        |\n\nFirst two requirements:\n1. Hasan Ali must be scheduled for Week 2.\n2. Bob Kumar cannot be scheduled for Week 4.\n\nWhat's your initial thinking?",
+      "phase": "setup",
+      "constraints_introduced": [
+        "C01",
+        "C02"
+      ],
+      "active_constraint_ids": [
+        "C01",
+        "C02"
+      ],
+      "n_active_constraints": 2
+    },
+    {
+      "turn_number": 2,
+      "is_checkpoint": false,
+      "prompt": "Keep in mind: Grace Liu cannot be scheduled for Week 4.",
+      "phase": "easy",
+      "constraints_introduced": [
+        "C03"
+      ],
+      "active_constraint_ids": [
+        "C01",
+        "C02",
+        "C03"
+      ],
+      "n_active_constraints": 3
+    },
+    {
+      "turn_number": 3,
+      "is_checkpoint": false,
+      "prompt": "Also, Elena Volkov must be scheduled for Week 1.",
+      "phase": "easy",
+      "constraints_introduced": [
+        "C04"
+      ],
+      "active_constraint_ids": [
+        "C01",
+        "C02",
+        "C03",
+        "C04"
+      ],
+      "n_active_constraints": 4
+    },
+    {
+      "turn_number": 4,
+      "is_checkpoint": false,
+      "prompt": "Also, Week 2 can hold at most 1 candidates.",
+      "phase": "easy",
+      "constraints_introduced": [
+        "C05"
+      ],
+      "active_constraint_ids": [
+        "C01",
+        "C02",
+        "C03",
+        "C04",
+        "C05"
+      ],
+      "n_active_constraints": 5
+    },
+    {
+      "turn_number": 5,
+      "is_checkpoint": false,
+      "prompt": "One more thing: David Park cannot be scheduled for Week 1.",
+      "phase": "easy",
+      "constraints_introduced": [
+        "C06"
+      ],
+      "active_constraint_ids": [
+        "C01",
+        "C02",
+        "C03",
+        "C04",
+        "C05",
+        "C06"
+      ],
+      "n_active_constraints": 6
+    },
+    {
+      "turn_number": 6,
+      "is_checkpoint": true,
+      "prompt": "Let's see where we are. Produce a complete plan satisfying all constraints so far. Use the format:\n\nCurrent Plan:\n[Interview Week]: [Candidate 1], ...\n...\nUnassigned: (if any)",
+      "phase": "checkpoint",
+      "constraints_introduced": [],
+      "ground_truth": {
+        "reference_assignment": {
+          "david": "wk3",
+          "elena": "wk1",
+          "hasan": "wk2",
+          "grace": "wk5",
+          "carol": "wk3",
+          "bob": "wk5",
+          "alice": "wk1",
+          "frank": "wk4"
+        },
+        "reference_plan_text": "Current Plan:\nWeek 1: Elena Volkov, Alice Chen\nWeek 2: Hasan Ali\nWeek 3: David Park, Carol Santos\nWeek 4: Frank Osei\nWeek 5: Grace Liu, Bob Kumar",
+        "constraint_satisfaction": {
+          "C01": {
+            "satisfied": true
+          },
+          "C02": {
+            "satisfied": true
+          },
+          "C03": {
+            "satisfied": true
+          },
+          "C04": {
+            "satisfied": true
+          },
+          "C05": {
+            "satisfied": true
+          },
+          "C06": {
+            "satisfied": true
+          }
+        },
+        "n_satisfied": 6,
+        "n_total": 6,
+        "n_conflicts": 0
+      },
+      "active_constraint_ids": [
+        "C01",
+        "C02",
+        "C03",
+        "C04",
+        "C05",
+        "C06"
+      ],
+      "n_active_constraints": 6
+    },
+    {
+      "turn_number": 7,
+      "is_checkpoint": false,
+      "prompt": "This is important: Grace Liu and David Park cannot be in the same interview week.",
+      "phase": "hard",
+      "constraints_introduced": [
+        "C07"
+      ],
+      "active_constraint_ids": [
+        "C01",
+        "C02",
+        "C03",
+        "C04",
+        "C05",
+        "C06",
+        "C07"
+      ],
+      "n_active_constraints": 7
+    },
+    {
+      "turn_number": 8,
+      "is_checkpoint": false,
+      "prompt": "This is important: Grace Liu and Elena Volkov cannot be in the same interview week.",
+      "phase": "hard",
+      "constraints_introduced": [
+        "C08"
+      ],
+      "active_constraint_ids": [
+        "C01",
+        "C02",
+        "C03",
+        "C04",
+        "C05",
+        "C06",
+        "C07",
+        "C08"
+      ],
+      "n_active_constraints": 8
+    },
+    {
+      "turn_number": 9,
+      "is_checkpoint": false,
+      "prompt": "New requirement from stakeholders: Frank Osei must be interviewed before Bob Kumar.",
+      "phase": "hard",
+      "constraints_introduced": [
+        "C09"
+      ],
+      "active_constraint_ids": [
+        "C01",
+        "C02",
+        "C03",
+        "C04",
+        "C05",
+        "C06",
+        "C07",
+        "C08",
+        "C09"
+      ],
+      "n_active_constraints": 9
+    },
+    {
+      "turn_number": 10,
+      "is_checkpoint": false,
+      "prompt": "Before we finalize, can you list all the constraints we've established so far?",
+      "phase": "recall",
+      "constraints_introduced": [],
+      "ground_truth": {
+        "scoring_type": "constraint_recall",
+        "expected_constraints": [
+          "C01",
+          "C02",
+          "C03",
+          "C04",
+          "C05",
+          "C06",
+          "C07",
+          "C08",
+          "C09"
+        ],
+        "n_expected": 9
+      },
+      "active_constraint_ids": [
+        "C01",
+        "C02",
+        "C03",
+        "C04",
+        "C05",
+        "C06",
+        "C07",
+        "C08",
+        "C09"
+      ],
+      "n_active_constraints": 9
+    },
+    {
+      "turn_number": 11,
+      "is_checkpoint": true,
+      "prompt": "Produce an updated plan incorporating all constraints. Same format as before.",
+      "phase": "checkpoint",
+      "constraints_introduced": [],
+      "ground_truth": {
+        "reference_assignment": {
+          "david": "wk3",
+          "elena": "wk1",
+          "hasan": "wk2",
+          "grace": "wk5",
+          "carol": "wk3",
+          "bob": "wk5",
+          "alice": "wk1",
+          "frank": "wk4"
+        },
+        "reference_plan_text": "Current Plan:\nWeek 1: Elena Volkov, Alice Chen\nWeek 2: Hasan Ali\nWeek 3: David Park, Carol Santos\nWeek 4: Frank Osei\nWeek 5: Grace Liu, Bob Kumar",
+        "constraint_satisfaction": {
+          "C01": {
+            "satisfied": true
+          },
+          "C02": {
+            "satisfied": true
+          },
+          "C03": {
+            "satisfied": true
+          },
+          "C04": {
+            "satisfied": true
+          },
+          "C05": {
+            "satisfied": true
+          },
+          "C06": {
+            "satisfied": true
+          },
+          "C07": {
+            "satisfied": true
+          },
+          "C08": {
+            "satisfied": true
+          },
+          "C09": {
+            "satisfied": true
+          }
+        },
+        "n_satisfied": 9,
+        "n_total": 9,
+        "n_conflicts": 0
+      },
+      "active_constraint_ids": [
+        "C01",
+        "C02",
+        "C03",
+        "C04",
+        "C05",
+        "C06",
+        "C07",
+        "C08",
+        "C09"
+      ],
+      "n_active_constraints": 9
+    },
+    {
+      "turn_number": 12,
+      "is_checkpoint": false,
+      "prompt": "There's been a change. Elena Volkov needs to be scheduled for Week 4 instead of Week 1. Please note this \u2014 we'll update the full plan soon.",
+      "phase": "modification",
+      "constraints_introduced": [],
+      "modification": {
+        "replaces": "C04",
+        "item": "elena",
+        "old_slot": "wk1",
+        "new_slot": "wk4"
+      },
+      "active_constraint_ids": [
+        "C01",
+        "C02",
+        "C03",
+        "C04",
+        "C05",
+        "C06",
+        "C07",
+        "C08",
+        "C09"
+      ],
+      "n_active_constraints": 9
+    },
+    {
+      "turn_number": 13,
+      "is_checkpoint": false,
+      "prompt": "The team added this: David Park and Alice Chen cannot be in the same interview week.",
+      "phase": "late",
+      "constraints_introduced": [
+        "C10"
+      ],
+      "active_constraint_ids": [
+        "C01",
+        "C02",
+        "C03",
+        "C04",
+        "C05",
+        "C06",
+        "C07",
+        "C08",
+        "C09",
+        "C10"
+      ],
+      "n_active_constraints": 10
+    },
+    {
+      "turn_number": 14,
+      "is_checkpoint": false,
+      "prompt": "Late addition: Frank Osei cannot be scheduled for Week 3.",
+      "phase": "late",
+      "constraints_introduced": [
+        "C11"
+      ],
+      "active_constraint_ids": [
+        "C01",
+        "C02",
+        "C03",
+        "C04",
+        "C05",
+        "C06",
+        "C07",
+        "C08",
+        "C09",
+        "C10",
+        "C11"
+      ],
+      "n_active_constraints": 11
+    },
+    {
+      "turn_number": 15,
+      "is_checkpoint": false,
+      "prompt": "After discussion, we also need: Elena Volkov and Alice Chen must be in the same interview week.",
+      "phase": "late",
+      "constraints_introduced": [
+        "C_trap"
+      ],
+      "active_constraint_ids": [
+        "C01",
+        "C02",
+        "C03",
+        "C04",
+        "C05",
+        "C06",
+        "C07",
+        "C08",
+        "C09",
+        "C10",
+        "C11",
+        "C_trap"
+      ],
+      "n_active_constraints": 12
+    },
+    {
+      "turn_number": 16,
+      "is_checkpoint": false,
+      "prompt": "Late addition: David Park must be interviewed before Grace Liu.",
+      "phase": "late",
+      "constraints_introduced": [
+        "C12"
+      ],
+      "active_constraint_ids": [
+        "C01",
+        "C02",
+        "C03",
+        "C04",
+        "C05",
+        "C06",
+        "C07",
+        "C08",
+        "C09",
+        "C10",
+        "C11",
+        "C_trap",
+        "C12"
+      ],
+      "n_active_constraints": 13
+    },
+    {
+      "turn_number": 17,
+      "is_checkpoint": true,
+      "prompt": "With all changes and new requirements, produce an updated plan. If any constraints conflict, flag them explicitly.",
+      "phase": "checkpoint",
+      "constraints_introduced": [],
+      "ground_truth": {
+        "reference_assignment": {
+          "david": "wk3",
+          "elena": "wk4",
+          "hasan": "wk2",
+          "grace": "wk5",
+          "carol": "wk3",
+          "bob": "wk5",
+          "alice": "wk1",
+          "frank": "wk1"
+        },
+        "reference_plan_text": "Current Plan:\nWeek 1: Alice Chen, Frank Osei\nWeek 2: Hasan Ali\nWeek 3: David Park, Carol Santos\nWeek 4: Elena Volkov\nWeek 5: Grace Liu, Bob Kumar",
+        "constraint_satisfaction": {
+          "C01": {
+            "satisfied": true
+          },
+          "C02": {
+            "satisfied": true
+          },
+          "C03": {
+            "satisfied": true
+          },
+          "C04": {
+            "satisfied": true
+          },
+          "C05": {
+            "satisfied": true
+          },
+          "C06": {
+            "satisfied": true
+          },
+          "C07": {
+            "satisfied": true
+          },
+          "C08": {
+            "satisfied": true
+          },
+          "C09": {
+            "satisfied": true
+          },
+          "C10": {
+            "satisfied": true
+          },
+          "C11": {
+            "satisfied": true
+          },
+          "C_trap": {
+            "satisfied": false,
+            "is_conflict": true,
+            "expected_behavior": "flag_conflict",
+            "scoring": {
+              "flagged": 1.0,
+              "silent_correct": 0.75,
+              "silent_wrong": 0.25,
+              "both_violated": 0.0
+            },
+            "conflict_reason": "Elena Volkov and Alice Chen were together in Week 1 before the modification but are now separated."
+          },
+          "C12": {
+            "satisfied": true
+          }
+        },
+        "n_satisfied": 12,
+        "n_total": 13,
+        "n_conflicts": 1
+      },
+      "active_constraint_ids": [
+        "C01",
+        "C02",
+        "C03",
+        "C04",
+        "C05",
+        "C06",
+        "C07",
+        "C08",
+        "C09",
+        "C10",
+        "C11",
+        "C_trap",
+        "C12"
+      ],
+      "n_active_constraints": 13
+    },
+    {
+      "turn_number": 18,
+      "is_checkpoint": false,
+      "prompt": "One more to factor in: The total salary in any single interview week must not exceed 235 K USD.",
+      "phase": "stress",
+      "constraints_introduced": [
+        "C13"
+      ],
+      "active_constraint_ids": [
+        "C01",
+        "C02",
+        "C03",
+        "C04",
+        "C05",
+        "C06",
+        "C07",
+        "C08",
+        "C09",
+        "C10",
+        "C11",
+        "C_trap",
+        "C12",
+        "C13"
+      ],
+      "n_active_constraints": 14
+    },
+    {
+      "turn_number": 19,
+      "is_checkpoint": false,
+      "prompt": "One more to factor in: If Hasan Ali is scheduled for Week 2, then Bob Kumar must be scheduled for Week 5.",
+      "phase": "stress",
+      "constraints_introduced": [
+        "C14"
+      ],
+      "active_constraint_ids": [
+        "C01",
+        "C02",
+        "C03",
+        "C04",
+        "C05",
+        "C06",
+        "C07",
+        "C08",
+        "C09",
+        "C10",
+        "C11",
+        "C_trap",
+        "C12",
+        "C13",
+        "C14"
+      ],
+      "n_active_constraints": 15
+    },
+    {
+      "turn_number": 20,
+      "is_checkpoint": true,
+      "prompt": "Produce your final plan. Then list every constraint we've discussed and state whether it is satisfied, violated, or in conflict with another constraint.",
+      "phase": "final_checkpoint",
+      "constraints_introduced": [],
+      "ground_truth": {
+        "reference_assignment": {
+          "david": "wk3",
+          "elena": "wk4",
+          "hasan": "wk2",
+          "grace": "wk5",
+          "carol": "wk3",
+          "bob": "wk5",
+          "alice": "wk1",
+          "frank": "wk1"
+        },
+        "reference_plan_text": "Current Plan:\nWeek 1: Alice Chen, Frank Osei\nWeek 2: Hasan Ali\nWeek 3: David Park, Carol Santos\nWeek 4: Elena Volkov\nWeek 5: Grace Liu, Bob Kumar",
+        "constraint_satisfaction": {
+          "C01": {
+            "satisfied": true
+          },
+          "C02": {
+            "satisfied": true
+          },
+          "C03": {
+            "satisfied": true
+          },
+          "C04": {
+            "satisfied": true
+          },
+          "C05": {
+            "satisfied": true
+          },
+          "C06": {
+            "satisfied": true
+          },
+          "C07": {
+            "satisfied": true
+          },
+          "C08": {
+            "satisfied": true
+          },
+          "C09": {
+            "satisfied": true
+          },
+          "C10": {
+            "satisfied": true
+          },
+          "C11": {
+            "satisfied": true
+          },
+          "C_trap": {
+            "satisfied": false,
+            "is_conflict": true,
+            "expected_behavior": "flag_conflict",
+            "scoring": {
+              "flagged": 1.0,
+              "silent_correct": 0.75,
+              "silent_wrong": 0.25,
+              "both_violated": 0.0
+            },
+            "conflict_reason": "Elena Volkov and Alice Chen were together in Week 1 before the modification but are now separated."
+          },
+          "C12": {
+            "satisfied": true
+          },
+          "C13": {
+            "satisfied": true
+          },
+          "C14": {
+            "satisfied": true
+          }
+        },
+        "n_satisfied": 14,
+        "n_total": 15,
+        "n_conflicts": 1
+      },
+      "active_constraint_ids": [
+        "C01",
+        "C02",
+        "C03",
+        "C04",
+        "C05",
+        "C06",
+        "C07",
+        "C08",
+        "C09",
+        "C10",
+        "C11",
+        "C_trap",
+        "C12",
+        "C13",
+        "C14"
+      ],
+      "n_active_constraints": 15
+    }
+  ]
+}

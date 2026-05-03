@@ -1,0 +1,789 @@
+{
+  "scenario_id": "P2_003",
+  "generator_version": "1.0.0",
+  "seed": 2026026603,
+  "domain": "conference",
+  "domain_display": "Conference Schedule",
+  "n_items": 8,
+  "n_slots": 5,
+  "system_prompt": "You are a planning assistant. Help the user build and maintain a plan by incorporating all constraints they introduce. Track every constraint carefully. When asked to produce a plan, use this exact format:\n\nCurrent Plan:\n[Slot Name]: [Item 1], [Item 2]\n[Slot Name]: [Item 3]\n...\nUnassigned: [Item 7], [Item 8] (if any)\n\nList ALL slots even if empty. If a new constraint conflicts with an earlier one, flag the conflict explicitly.",
+  "solution_base": {
+    "data_ws": "tue_am",
+    "product_demo": "tue_am",
+    "networking": "mon_pm",
+    "keynote": "mon_pm",
+    "ai_panel": "mon_am",
+    "team_bldg": "tue_pm",
+    "research": "wed_am",
+    "closing": "wed_am"
+  },
+  "solution_modified": {
+    "data_ws": "tue_am",
+    "product_demo": "tue_am",
+    "networking": "mon_pm",
+    "keynote": "mon_pm",
+    "ai_panel": "mon_am",
+    "team_bldg": "mon_am",
+    "research": "tue_pm",
+    "closing": "wed_am"
+  },
+  "modification": {
+    "item": "research",
+    "old_slot": "wed_am",
+    "new_slot": "tue_pm",
+    "original_constraint_id": "C02",
+    "bumped_item": "team_bldg",
+    "bumped_to": "mon_am"
+  },
+  "conflict": {
+    "id": "C_trap",
+    "type": "co_location",
+    "introduced_at_turn": 15,
+    "reason": "Research Talks and Closing Remarks were together in Wednesday Morning before the modification but are now separated."
+  },
+  "constraints": [
+    {
+      "type": "fixed_assignment",
+      "item": "networking",
+      "slot": "mon_pm",
+      "id": "C01"
+    },
+    {
+      "type": "fixed_assignment",
+      "item": "research",
+      "slot": "wed_am",
+      "id": "C02"
+    },
+    {
+      "type": "exclusion",
+      "item": "keynote",
+      "slot": "wed_am",
+      "id": "C03"
+    },
+    {
+      "type": "exclusion",
+      "item": "data_ws",
+      "slot": "tue_pm",
+      "id": "C04"
+    },
+    {
+      "type": "capacity",
+      "slot": "mon_pm",
+      "max": 3,
+      "id": "C05"
+    },
+    {
+      "type": "exclusion",
+      "item": "closing",
+      "slot": "tue_am",
+      "id": "C06"
+    },
+    {
+      "type": "mutual_exclusion",
+      "item_a": "product_demo",
+      "item_b": "research",
+      "id": "C07"
+    },
+    {
+      "type": "ordering",
+      "item_a": "keynote",
+      "item_b": "data_ws",
+      "id": "C08"
+    },
+    {
+      "type": "mutual_exclusion",
+      "item_a": "product_demo",
+      "item_b": "keynote",
+      "id": "C09"
+    },
+    {
+      "type": "exclusion",
+      "item": "networking",
+      "slot": "wed_am",
+      "id": "C10"
+    },
+    {
+      "type": "ordering",
+      "item_a": "product_demo",
+      "item_b": "closing",
+      "id": "C11"
+    },
+    {
+      "type": "mutual_exclusion",
+      "item_a": "keynote",
+      "item_b": "data_ws",
+      "id": "C12"
+    },
+    {
+      "type": "co_location",
+      "item_a": "research",
+      "item_b": "closing",
+      "id": "C_trap"
+    },
+    {
+      "type": "sum_limit",
+      "property": "attendees",
+      "max_per_slot": 325,
+      "id": "C13"
+    },
+    {
+      "type": "conditional",
+      "if_item": "research",
+      "if_slot": "tue_pm",
+      "then_item": "ai_panel",
+      "then_slot": "mon_am",
+      "id": "C14"
+    }
+  ],
+  "turns": [
+    {
+      "turn_number": 1,
+      "is_checkpoint": false,
+      "prompt": "We're organizing a 3-day tech conference with 8 sessions across 5 time blocks.\n\nHere are the sessions:\n\n| Session                | Attendees | Duration(hrs) |\n| ---------------------- | --------- | ------------- |\n| Keynote Address        | 200       | 2.0           |\n| AI Ethics Panel        | 80        | 1.5           |\n| Data Science Workshop  | 60        | 2.0           |\n| Networking Session     | 120       | 1.0           |\n| Product Demo           | 90        | 1.5           |\n| Research Talks         | 70        | 2.0           |\n| Team Building Activity | 100       | 1.5           |\n| Closing Remarks        | 180       | 1.0           |\n\nAvailable time blocks (in order):\n\n| Time Block        | Capacity |\n| ----------------- | -------- |\n| Monday Morning    | 2        |\n| Monday Afternoon  | 2        |\n| Tuesday Morning   | 2        |\n| Tuesday Afternoon | 1        |\n| Wednesday Morning | 2        |\n\nFirst two requirements:\n1. Networking Session must be scheduled in Monday Afternoon.\n2. Research Talks must be scheduled in Wednesday Morning.\n\nWhat's your initial thinking?",
+      "phase": "setup",
+      "constraints_introduced": [
+        "C01",
+        "C02"
+      ],
+      "active_constraint_ids": [
+        "C01",
+        "C02"
+      ],
+      "n_active_constraints": 2
+    },
+    {
+      "turn_number": 2,
+      "is_checkpoint": false,
+      "prompt": "One more thing: Keynote Address cannot be scheduled in Wednesday Morning.",
+      "phase": "easy",
+      "constraints_introduced": [
+        "C03"
+      ],
+      "active_constraint_ids": [
+        "C01",
+        "C02",
+        "C03"
+      ],
+      "n_active_constraints": 3
+    },
+    {
+      "turn_number": 3,
+      "is_checkpoint": false,
+      "prompt": "One more thing: Data Science Workshop cannot be scheduled in Tuesday Afternoon.",
+      "phase": "easy",
+      "constraints_introduced": [
+        "C04"
+      ],
+      "active_constraint_ids": [
+        "C01",
+        "C02",
+        "C03",
+        "C04"
+      ],
+      "n_active_constraints": 4
+    },
+    {
+      "turn_number": 4,
+      "is_checkpoint": false,
+      "prompt": "Additionally, Monday Afternoon can hold at most 3 sessions.",
+      "phase": "easy",
+      "constraints_introduced": [
+        "C05"
+      ],
+      "active_constraint_ids": [
+        "C01",
+        "C02",
+        "C03",
+        "C04",
+        "C05"
+      ],
+      "n_active_constraints": 5
+    },
+    {
+      "turn_number": 5,
+      "is_checkpoint": false,
+      "prompt": "One more thing: Closing Remarks cannot be scheduled in Tuesday Morning.",
+      "phase": "easy",
+      "constraints_introduced": [
+        "C06"
+      ],
+      "active_constraint_ids": [
+        "C01",
+        "C02",
+        "C03",
+        "C04",
+        "C05",
+        "C06"
+      ],
+      "n_active_constraints": 6
+    },
+    {
+      "turn_number": 6,
+      "is_checkpoint": true,
+      "prompt": "Let's see where we are. Produce a complete plan satisfying all constraints so far. Use the format:\n\nCurrent Plan:\n[Time Block]: [Session 1], ...\n...\nUnassigned: (if any)",
+      "phase": "checkpoint",
+      "constraints_introduced": [],
+      "ground_truth": {
+        "reference_assignment": {
+          "data_ws": "tue_am",
+          "product_demo": "tue_am",
+          "networking": "mon_pm",
+          "keynote": "mon_pm",
+          "ai_panel": "mon_am",
+          "team_bldg": "tue_pm",
+          "research": "wed_am",
+          "closing": "wed_am"
+        },
+        "reference_plan_text": "Current Plan:\nMonday Morning: AI Ethics Panel\nMonday Afternoon: Networking Session, Keynote Address\nTuesday Morning: Data Science Workshop, Product Demo\nTuesday Afternoon: Team Building Activity\nWednesday Morning: Research Talks, Closing Remarks",
+        "constraint_satisfaction": {
+          "C01": {
+            "satisfied": true
+          },
+          "C02": {
+            "satisfied": true
+          },
+          "C03": {
+            "satisfied": true
+          },
+          "C04": {
+            "satisfied": true
+          },
+          "C05": {
+            "satisfied": true
+          },
+          "C06": {
+            "satisfied": true
+          }
+        },
+        "n_satisfied": 6,
+        "n_total": 6,
+        "n_conflicts": 0
+      },
+      "active_constraint_ids": [
+        "C01",
+        "C02",
+        "C03",
+        "C04",
+        "C05",
+        "C06"
+      ],
+      "n_active_constraints": 6
+    },
+    {
+      "turn_number": 7,
+      "is_checkpoint": false,
+      "prompt": "The team insists: Product Demo and Research Talks cannot be in the same time block.",
+      "phase": "hard",
+      "constraints_introduced": [
+        "C07"
+      ],
+      "active_constraint_ids": [
+        "C01",
+        "C02",
+        "C03",
+        "C04",
+        "C05",
+        "C06",
+        "C07"
+      ],
+      "n_active_constraints": 7
+    },
+    {
+      "turn_number": 8,
+      "is_checkpoint": false,
+      "prompt": "New requirement from stakeholders: Keynote Address must be scheduled before Data Science Workshop.",
+      "phase": "hard",
+      "constraints_introduced": [
+        "C08"
+      ],
+      "active_constraint_ids": [
+        "C01",
+        "C02",
+        "C03",
+        "C04",
+        "C05",
+        "C06",
+        "C07",
+        "C08"
+      ],
+      "n_active_constraints": 8
+    },
+    {
+      "turn_number": 9,
+      "is_checkpoint": false,
+      "prompt": "This came up in a meeting: Product Demo and Keynote Address cannot be in the same time block.",
+      "phase": "hard",
+      "constraints_introduced": [
+        "C09"
+      ],
+      "active_constraint_ids": [
+        "C01",
+        "C02",
+        "C03",
+        "C04",
+        "C05",
+        "C06",
+        "C07",
+        "C08",
+        "C09"
+      ],
+      "n_active_constraints": 9
+    },
+    {
+      "turn_number": 10,
+      "is_checkpoint": false,
+      "prompt": "Before we finalize, can you list all the constraints we've established so far?",
+      "phase": "recall",
+      "constraints_introduced": [],
+      "ground_truth": {
+        "scoring_type": "constraint_recall",
+        "expected_constraints": [
+          "C01",
+          "C02",
+          "C03",
+          "C04",
+          "C05",
+          "C06",
+          "C07",
+          "C08",
+          "C09"
+        ],
+        "n_expected": 9
+      },
+      "active_constraint_ids": [
+        "C01",
+        "C02",
+        "C03",
+        "C04",
+        "C05",
+        "C06",
+        "C07",
+        "C08",
+        "C09"
+      ],
+      "n_active_constraints": 9
+    },
+    {
+      "turn_number": 11,
+      "is_checkpoint": true,
+      "prompt": "Produce an updated plan incorporating all constraints. Same format as before.",
+      "phase": "checkpoint",
+      "constraints_introduced": [],
+      "ground_truth": {
+        "reference_assignment": {
+          "data_ws": "tue_am",
+          "product_demo": "tue_am",
+          "networking": "mon_pm",
+          "keynote": "mon_pm",
+          "ai_panel": "mon_am",
+          "team_bldg": "tue_pm",
+          "research": "wed_am",
+          "closing": "wed_am"
+        },
+        "reference_plan_text": "Current Plan:\nMonday Morning: AI Ethics Panel\nMonday Afternoon: Networking Session, Keynote Address\nTuesday Morning: Data Science Workshop, Product Demo\nTuesday Afternoon: Team Building Activity\nWednesday Morning: Research Talks, Closing Remarks",
+        "constraint_satisfaction": {
+          "C01": {
+            "satisfied": true
+          },
+          "C02": {
+            "satisfied": true
+          },
+          "C03": {
+            "satisfied": true
+          },
+          "C04": {
+            "satisfied": true
+          },
+          "C05": {
+            "satisfied": true
+          },
+          "C06": {
+            "satisfied": true
+          },
+          "C07": {
+            "satisfied": true
+          },
+          "C08": {
+            "satisfied": true
+          },
+          "C09": {
+            "satisfied": true
+          }
+        },
+        "n_satisfied": 9,
+        "n_total": 9,
+        "n_conflicts": 0
+      },
+      "active_constraint_ids": [
+        "C01",
+        "C02",
+        "C03",
+        "C04",
+        "C05",
+        "C06",
+        "C07",
+        "C08",
+        "C09"
+      ],
+      "n_active_constraints": 9
+    },
+    {
+      "turn_number": 12,
+      "is_checkpoint": false,
+      "prompt": "There's been a change. Research Talks needs to be scheduled in Tuesday Afternoon instead of Wednesday Morning. Please note this \u2014 we'll update the full plan soon.",
+      "phase": "modification",
+      "constraints_introduced": [],
+      "modification": {
+        "replaces": "C02",
+        "item": "research",
+        "old_slot": "wed_am",
+        "new_slot": "tue_pm"
+      },
+      "active_constraint_ids": [
+        "C01",
+        "C02",
+        "C03",
+        "C04",
+        "C05",
+        "C06",
+        "C07",
+        "C08",
+        "C09"
+      ],
+      "n_active_constraints": 9
+    },
+    {
+      "turn_number": 13,
+      "is_checkpoint": false,
+      "prompt": "Late addition: Networking Session cannot be scheduled in Wednesday Morning.",
+      "phase": "late",
+      "constraints_introduced": [
+        "C10"
+      ],
+      "active_constraint_ids": [
+        "C01",
+        "C02",
+        "C03",
+        "C04",
+        "C05",
+        "C06",
+        "C07",
+        "C08",
+        "C09",
+        "C10"
+      ],
+      "n_active_constraints": 10
+    },
+    {
+      "turn_number": 14,
+      "is_checkpoint": false,
+      "prompt": "After discussion, we also need: Product Demo must be scheduled before Closing Remarks.",
+      "phase": "late",
+      "constraints_introduced": [
+        "C11"
+      ],
+      "active_constraint_ids": [
+        "C01",
+        "C02",
+        "C03",
+        "C04",
+        "C05",
+        "C06",
+        "C07",
+        "C08",
+        "C09",
+        "C10",
+        "C11"
+      ],
+      "n_active_constraints": 11
+    },
+    {
+      "turn_number": 15,
+      "is_checkpoint": false,
+      "prompt": "After discussion, we also need: Research Talks and Closing Remarks must be in the same time block.",
+      "phase": "late",
+      "constraints_introduced": [
+        "C_trap"
+      ],
+      "active_constraint_ids": [
+        "C01",
+        "C02",
+        "C03",
+        "C04",
+        "C05",
+        "C06",
+        "C07",
+        "C08",
+        "C09",
+        "C10",
+        "C11",
+        "C_trap"
+      ],
+      "n_active_constraints": 12
+    },
+    {
+      "turn_number": 16,
+      "is_checkpoint": false,
+      "prompt": "The team added this: Keynote Address and Data Science Workshop cannot be in the same time block.",
+      "phase": "late",
+      "constraints_introduced": [
+        "C12"
+      ],
+      "active_constraint_ids": [
+        "C01",
+        "C02",
+        "C03",
+        "C04",
+        "C05",
+        "C06",
+        "C07",
+        "C08",
+        "C09",
+        "C10",
+        "C11",
+        "C_trap",
+        "C12"
+      ],
+      "n_active_constraints": 13
+    },
+    {
+      "turn_number": 17,
+      "is_checkpoint": true,
+      "prompt": "With all changes and new requirements, produce an updated plan. If any constraints conflict, flag them explicitly.",
+      "phase": "checkpoint",
+      "constraints_introduced": [],
+      "ground_truth": {
+        "reference_assignment": {
+          "data_ws": "tue_am",
+          "product_demo": "tue_am",
+          "networking": "mon_pm",
+          "keynote": "mon_pm",
+          "ai_panel": "mon_am",
+          "team_bldg": "mon_am",
+          "research": "tue_pm",
+          "closing": "wed_am"
+        },
+        "reference_plan_text": "Current Plan:\nMonday Morning: AI Ethics Panel, Team Building Activity\nMonday Afternoon: Networking Session, Keynote Address\nTuesday Morning: Data Science Workshop, Product Demo\nTuesday Afternoon: Research Talks\nWednesday Morning: Closing Remarks",
+        "constraint_satisfaction": {
+          "C01": {
+            "satisfied": true
+          },
+          "C02": {
+            "satisfied": true
+          },
+          "C03": {
+            "satisfied": true
+          },
+          "C04": {
+            "satisfied": true
+          },
+          "C05": {
+            "satisfied": true
+          },
+          "C06": {
+            "satisfied": true
+          },
+          "C07": {
+            "satisfied": true
+          },
+          "C08": {
+            "satisfied": true
+          },
+          "C09": {
+            "satisfied": true
+          },
+          "C10": {
+            "satisfied": true
+          },
+          "C11": {
+            "satisfied": true
+          },
+          "C_trap": {
+            "satisfied": false,
+            "is_conflict": true,
+            "expected_behavior": "flag_conflict",
+            "scoring": {
+              "flagged": 1.0,
+              "silent_correct": 0.75,
+              "silent_wrong": 0.25,
+              "both_violated": 0.0
+            },
+            "conflict_reason": "Research Talks and Closing Remarks were together in Wednesday Morning before the modification but are now separated."
+          },
+          "C12": {
+            "satisfied": true
+          }
+        },
+        "n_satisfied": 12,
+        "n_total": 13,
+        "n_conflicts": 1
+      },
+      "active_constraint_ids": [
+        "C01",
+        "C02",
+        "C03",
+        "C04",
+        "C05",
+        "C06",
+        "C07",
+        "C08",
+        "C09",
+        "C10",
+        "C11",
+        "C_trap",
+        "C12"
+      ],
+      "n_active_constraints": 13
+    },
+    {
+      "turn_number": 18,
+      "is_checkpoint": false,
+      "prompt": "Final requirement: The total attendees in any single time block must not exceed 325 people.",
+      "phase": "stress",
+      "constraints_introduced": [
+        "C13"
+      ],
+      "active_constraint_ids": [
+        "C01",
+        "C02",
+        "C03",
+        "C04",
+        "C05",
+        "C06",
+        "C07",
+        "C08",
+        "C09",
+        "C10",
+        "C11",
+        "C_trap",
+        "C12",
+        "C13"
+      ],
+      "n_active_constraints": 14
+    },
+    {
+      "turn_number": 19,
+      "is_checkpoint": false,
+      "prompt": "Final requirement: If Research Talks is scheduled in Tuesday Afternoon, then AI Ethics Panel must be scheduled in Monday Morning.",
+      "phase": "stress",
+      "constraints_introduced": [
+        "C14"
+      ],
+      "active_constraint_ids": [
+        "C01",
+        "C02",
+        "C03",
+        "C04",
+        "C05",
+        "C06",
+        "C07",
+        "C08",
+        "C09",
+        "C10",
+        "C11",
+        "C_trap",
+        "C12",
+        "C13",
+        "C14"
+      ],
+      "n_active_constraints": 15
+    },
+    {
+      "turn_number": 20,
+      "is_checkpoint": true,
+      "prompt": "Produce your final plan. Then list every constraint we've discussed and state whether it is satisfied, violated, or in conflict with another constraint.",
+      "phase": "final_checkpoint",
+      "constraints_introduced": [],
+      "ground_truth": {
+        "reference_assignment": {
+          "data_ws": "tue_am",
+          "product_demo": "tue_am",
+          "networking": "mon_pm",
+          "keynote": "mon_pm",
+          "ai_panel": "mon_am",
+          "team_bldg": "mon_am",
+          "research": "tue_pm",
+          "closing": "wed_am"
+        },
+        "reference_plan_text": "Current Plan:\nMonday Morning: AI Ethics Panel, Team Building Activity\nMonday Afternoon: Networking Session, Keynote Address\nTuesday Morning: Data Science Workshop, Product Demo\nTuesday Afternoon: Research Talks\nWednesday Morning: Closing Remarks",
+        "constraint_satisfaction": {
+          "C01": {
+            "satisfied": true
+          },
+          "C02": {
+            "satisfied": true
+          },
+          "C03": {
+            "satisfied": true
+          },
+          "C04": {
+            "satisfied": true
+          },
+          "C05": {
+            "satisfied": true
+          },
+          "C06": {
+            "satisfied": true
+          },
+          "C07": {
+            "satisfied": true
+          },
+          "C08": {
+            "satisfied": true
+          },
+          "C09": {
+            "satisfied": true
+          },
+          "C10": {
+            "satisfied": true
+          },
+          "C11": {
+            "satisfied": true
+          },
+          "C_trap": {
+            "satisfied": false,
+            "is_conflict": true,
+            "expected_behavior": "flag_conflict",
+            "scoring": {
+              "flagged": 1.0,
+              "silent_correct": 0.75,
+              "silent_wrong": 0.25,
+              "both_violated": 0.0
+            },
+            "conflict_reason": "Research Talks and Closing Remarks were together in Wednesday Morning before the modification but are now separated."
+          },
+          "C12": {
+            "satisfied": true
+          },
+          "C13": {
+            "satisfied": true
+          },
+          "C14": {
+            "satisfied": true
+          }
+        },
+        "n_satisfied": 14,
+        "n_total": 15,
+        "n_conflicts": 1
+      },
+      "active_constraint_ids": [
+        "C01",
+        "C02",
+        "C03",
+        "C04",
+        "C05",
+        "C06",
+        "C07",
+        "C08",
+        "C09",
+        "C10",
+        "C11",
+        "C_trap",
+        "C12",
+        "C13",
+        "C14"
+      ],
+      "n_active_constraints": 15
+    }
+  ]
+}

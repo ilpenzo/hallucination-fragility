@@ -1,0 +1,789 @@
+{
+  "scenario_id": "P2_038",
+  "generator_version": "1.0.0",
+  "seed": 2026026638,
+  "domain": "relocation",
+  "domain_display": "Office Relocation",
+  "n_items": 8,
+  "n_slots": 5,
+  "system_prompt": "You are a planning assistant. Help the user build and maintain a plan by incorporating all constraints they introduce. Track every constraint carefully. When asked to produce a plan, use this exact format:\n\nCurrent Plan:\n[Slot Name]: [Item 1], [Item 2]\n[Slot Name]: [Item 3]\n...\nUnassigned: [Item 7], [Item 8] (if any)\n\nList ALL slots even if empty. If a new constraint conflicts with an earlier one, flag the conflict explicitly.",
+  "solution_base": {
+    "sales": "fl2",
+    "design": "fl1",
+    "product": "fl5",
+    "mktg": "fl4",
+    "hr": "fl1",
+    "eng": "fl5",
+    "finance": "fl2",
+    "legal": "fl3"
+  },
+  "solution_modified": {
+    "sales": "fl2",
+    "design": "fl1",
+    "product": "fl5",
+    "mktg": "fl3",
+    "hr": "fl1",
+    "eng": "fl4",
+    "finance": "fl2",
+    "legal": "fl3"
+  },
+  "modification": {
+    "item": "eng",
+    "old_slot": "fl5",
+    "new_slot": "fl4",
+    "original_constraint_id": "C02",
+    "bumped_item": "mktg",
+    "bumped_to": "fl3"
+  },
+  "conflict": {
+    "id": "C_trap",
+    "type": "co_location",
+    "introduced_at_turn": 15,
+    "reason": "Product and Engineering were together in Floor 5 before the modification but are now separated."
+  },
+  "constraints": [
+    {
+      "type": "capacity",
+      "slot": "fl1",
+      "max": 2,
+      "id": "C01"
+    },
+    {
+      "type": "fixed_assignment",
+      "item": "eng",
+      "slot": "fl5",
+      "id": "C02"
+    },
+    {
+      "type": "fixed_assignment",
+      "item": "finance",
+      "slot": "fl2",
+      "id": "C03"
+    },
+    {
+      "type": "exclusion",
+      "item": "design",
+      "slot": "fl2",
+      "id": "C04"
+    },
+    {
+      "type": "exclusion",
+      "item": "product",
+      "slot": "fl1",
+      "id": "C05"
+    },
+    {
+      "type": "exclusion",
+      "item": "hr",
+      "slot": "fl2",
+      "id": "C06"
+    },
+    {
+      "type": "mutual_exclusion",
+      "item_a": "eng",
+      "item_b": "design",
+      "id": "C07"
+    },
+    {
+      "type": "mutual_exclusion",
+      "item_a": "hr",
+      "item_b": "product",
+      "id": "C08"
+    },
+    {
+      "type": "ordering",
+      "item_a": "sales",
+      "item_b": "eng",
+      "id": "C09"
+    },
+    {
+      "type": "exclusion",
+      "item": "eng",
+      "slot": "fl1",
+      "id": "C10"
+    },
+    {
+      "type": "ordering",
+      "item_a": "sales",
+      "item_b": "mktg",
+      "id": "C11"
+    },
+    {
+      "type": "mutual_exclusion",
+      "item_a": "eng",
+      "item_b": "hr",
+      "id": "C12"
+    },
+    {
+      "type": "co_location",
+      "item_a": "product",
+      "item_b": "eng",
+      "id": "C_trap"
+    },
+    {
+      "type": "sum_limit",
+      "property": "headcount",
+      "max_per_slot": 35,
+      "id": "C13"
+    },
+    {
+      "type": "conditional",
+      "if_item": "finance",
+      "if_slot": "fl2",
+      "then_item": "mktg",
+      "then_slot": "fl3",
+      "id": "C14"
+    }
+  ],
+  "turns": [
+    {
+      "turn_number": 1,
+      "is_checkpoint": false,
+      "prompt": "We're relocating to a new 5-floor office and need to assign 8 teams across 5 floors.\n\nHere are the teams:\n\n| Team            | Headcount | Noise(1-5) |\n| --------------- | --------- | ---------- |\n| Engineering     | 28        | 3          |\n| Marketing       | 15        | 4          |\n| Sales           | 20        | 5          |\n| Human Resources | 8         | 2          |\n| Finance         | 10        | 1          |\n| Legal           | 6         | 1          |\n| Product         | 12        | 3          |\n| Design          | 9         | 2          |\n\nAvailable floors (in order):\n\n| Floor   | Capacity |\n| ------- | -------- |\n| Floor 1 | 2        |\n| Floor 2 | 2        |\n| Floor 3 | 2        |\n| Floor 4 | 1        |\n| Floor 5 | 2        |\n\nFirst two requirements:\n1. Floor 1 can hold at most 2 teams.\n2. Engineering must be placed on Floor 5.\n\nWhat's your initial thinking?",
+      "phase": "setup",
+      "constraints_introduced": [
+        "C01",
+        "C02"
+      ],
+      "active_constraint_ids": [
+        "C01",
+        "C02"
+      ],
+      "n_active_constraints": 2
+    },
+    {
+      "turn_number": 2,
+      "is_checkpoint": false,
+      "prompt": "One more thing: Finance must be placed on Floor 2.",
+      "phase": "easy",
+      "constraints_introduced": [
+        "C03"
+      ],
+      "active_constraint_ids": [
+        "C01",
+        "C02",
+        "C03"
+      ],
+      "n_active_constraints": 3
+    },
+    {
+      "turn_number": 3,
+      "is_checkpoint": false,
+      "prompt": "Also, Design cannot be placed on Floor 2.",
+      "phase": "easy",
+      "constraints_introduced": [
+        "C04"
+      ],
+      "active_constraint_ids": [
+        "C01",
+        "C02",
+        "C03",
+        "C04"
+      ],
+      "n_active_constraints": 4
+    },
+    {
+      "turn_number": 4,
+      "is_checkpoint": false,
+      "prompt": "Additionally, Product cannot be placed on Floor 1.",
+      "phase": "easy",
+      "constraints_introduced": [
+        "C05"
+      ],
+      "active_constraint_ids": [
+        "C01",
+        "C02",
+        "C03",
+        "C04",
+        "C05"
+      ],
+      "n_active_constraints": 5
+    },
+    {
+      "turn_number": 5,
+      "is_checkpoint": false,
+      "prompt": "Also, Human Resources cannot be placed on Floor 2.",
+      "phase": "easy",
+      "constraints_introduced": [
+        "C06"
+      ],
+      "active_constraint_ids": [
+        "C01",
+        "C02",
+        "C03",
+        "C04",
+        "C05",
+        "C06"
+      ],
+      "n_active_constraints": 6
+    },
+    {
+      "turn_number": 6,
+      "is_checkpoint": true,
+      "prompt": "Let's see where we are. Produce a complete plan satisfying all constraints so far. Use the format:\n\nCurrent Plan:\n[Floor]: [Team 1], ...\n...\nUnassigned: (if any)",
+      "phase": "checkpoint",
+      "constraints_introduced": [],
+      "ground_truth": {
+        "reference_assignment": {
+          "sales": "fl2",
+          "design": "fl1",
+          "product": "fl5",
+          "mktg": "fl4",
+          "hr": "fl1",
+          "eng": "fl5",
+          "finance": "fl2",
+          "legal": "fl3"
+        },
+        "reference_plan_text": "Current Plan:\nFloor 1: Design, Human Resources\nFloor 2: Sales, Finance\nFloor 3: Legal\nFloor 4: Marketing\nFloor 5: Product, Engineering",
+        "constraint_satisfaction": {
+          "C01": {
+            "satisfied": true
+          },
+          "C02": {
+            "satisfied": true
+          },
+          "C03": {
+            "satisfied": true
+          },
+          "C04": {
+            "satisfied": true
+          },
+          "C05": {
+            "satisfied": true
+          },
+          "C06": {
+            "satisfied": true
+          }
+        },
+        "n_satisfied": 6,
+        "n_total": 6,
+        "n_conflicts": 0
+      },
+      "active_constraint_ids": [
+        "C01",
+        "C02",
+        "C03",
+        "C04",
+        "C05",
+        "C06"
+      ],
+      "n_active_constraints": 6
+    },
+    {
+      "turn_number": 7,
+      "is_checkpoint": false,
+      "prompt": "The team insists: Engineering and Design cannot be in the same floor.",
+      "phase": "hard",
+      "constraints_introduced": [
+        "C07"
+      ],
+      "active_constraint_ids": [
+        "C01",
+        "C02",
+        "C03",
+        "C04",
+        "C05",
+        "C06",
+        "C07"
+      ],
+      "n_active_constraints": 7
+    },
+    {
+      "turn_number": 8,
+      "is_checkpoint": false,
+      "prompt": "This came up in a meeting: Human Resources and Product cannot be in the same floor.",
+      "phase": "hard",
+      "constraints_introduced": [
+        "C08"
+      ],
+      "active_constraint_ids": [
+        "C01",
+        "C02",
+        "C03",
+        "C04",
+        "C05",
+        "C06",
+        "C07",
+        "C08"
+      ],
+      "n_active_constraints": 8
+    },
+    {
+      "turn_number": 9,
+      "is_checkpoint": false,
+      "prompt": "New requirement from stakeholders: Sales must be placed on a lower floor than Engineering.",
+      "phase": "hard",
+      "constraints_introduced": [
+        "C09"
+      ],
+      "active_constraint_ids": [
+        "C01",
+        "C02",
+        "C03",
+        "C04",
+        "C05",
+        "C06",
+        "C07",
+        "C08",
+        "C09"
+      ],
+      "n_active_constraints": 9
+    },
+    {
+      "turn_number": 10,
+      "is_checkpoint": false,
+      "prompt": "Before we finalize, can you list all the constraints we've established so far?",
+      "phase": "recall",
+      "constraints_introduced": [],
+      "ground_truth": {
+        "scoring_type": "constraint_recall",
+        "expected_constraints": [
+          "C01",
+          "C02",
+          "C03",
+          "C04",
+          "C05",
+          "C06",
+          "C07",
+          "C08",
+          "C09"
+        ],
+        "n_expected": 9
+      },
+      "active_constraint_ids": [
+        "C01",
+        "C02",
+        "C03",
+        "C04",
+        "C05",
+        "C06",
+        "C07",
+        "C08",
+        "C09"
+      ],
+      "n_active_constraints": 9
+    },
+    {
+      "turn_number": 11,
+      "is_checkpoint": true,
+      "prompt": "Produce an updated plan incorporating all constraints. Same format as before.",
+      "phase": "checkpoint",
+      "constraints_introduced": [],
+      "ground_truth": {
+        "reference_assignment": {
+          "sales": "fl2",
+          "design": "fl1",
+          "product": "fl5",
+          "mktg": "fl4",
+          "hr": "fl1",
+          "eng": "fl5",
+          "finance": "fl2",
+          "legal": "fl3"
+        },
+        "reference_plan_text": "Current Plan:\nFloor 1: Design, Human Resources\nFloor 2: Sales, Finance\nFloor 3: Legal\nFloor 4: Marketing\nFloor 5: Product, Engineering",
+        "constraint_satisfaction": {
+          "C01": {
+            "satisfied": true
+          },
+          "C02": {
+            "satisfied": true
+          },
+          "C03": {
+            "satisfied": true
+          },
+          "C04": {
+            "satisfied": true
+          },
+          "C05": {
+            "satisfied": true
+          },
+          "C06": {
+            "satisfied": true
+          },
+          "C07": {
+            "satisfied": true
+          },
+          "C08": {
+            "satisfied": true
+          },
+          "C09": {
+            "satisfied": true
+          }
+        },
+        "n_satisfied": 9,
+        "n_total": 9,
+        "n_conflicts": 0
+      },
+      "active_constraint_ids": [
+        "C01",
+        "C02",
+        "C03",
+        "C04",
+        "C05",
+        "C06",
+        "C07",
+        "C08",
+        "C09"
+      ],
+      "n_active_constraints": 9
+    },
+    {
+      "turn_number": 12,
+      "is_checkpoint": false,
+      "prompt": "There's been a change. Engineering needs to be placed on Floor 4 instead of Floor 5. Please note this \u2014 we'll update the full plan soon.",
+      "phase": "modification",
+      "constraints_introduced": [],
+      "modification": {
+        "replaces": "C02",
+        "item": "eng",
+        "old_slot": "fl5",
+        "new_slot": "fl4"
+      },
+      "active_constraint_ids": [
+        "C01",
+        "C02",
+        "C03",
+        "C04",
+        "C05",
+        "C06",
+        "C07",
+        "C08",
+        "C09"
+      ],
+      "n_active_constraints": 9
+    },
+    {
+      "turn_number": 13,
+      "is_checkpoint": false,
+      "prompt": "The team added this: Engineering cannot be placed on Floor 1.",
+      "phase": "late",
+      "constraints_introduced": [
+        "C10"
+      ],
+      "active_constraint_ids": [
+        "C01",
+        "C02",
+        "C03",
+        "C04",
+        "C05",
+        "C06",
+        "C07",
+        "C08",
+        "C09",
+        "C10"
+      ],
+      "n_active_constraints": 10
+    },
+    {
+      "turn_number": 14,
+      "is_checkpoint": false,
+      "prompt": "Another requirement: Sales must be placed on a lower floor than Marketing.",
+      "phase": "late",
+      "constraints_introduced": [
+        "C11"
+      ],
+      "active_constraint_ids": [
+        "C01",
+        "C02",
+        "C03",
+        "C04",
+        "C05",
+        "C06",
+        "C07",
+        "C08",
+        "C09",
+        "C10",
+        "C11"
+      ],
+      "n_active_constraints": 11
+    },
+    {
+      "turn_number": 15,
+      "is_checkpoint": false,
+      "prompt": "The team added this: Product and Engineering must be in the same floor.",
+      "phase": "late",
+      "constraints_introduced": [
+        "C_trap"
+      ],
+      "active_constraint_ids": [
+        "C01",
+        "C02",
+        "C03",
+        "C04",
+        "C05",
+        "C06",
+        "C07",
+        "C08",
+        "C09",
+        "C10",
+        "C11",
+        "C_trap"
+      ],
+      "n_active_constraints": 12
+    },
+    {
+      "turn_number": 16,
+      "is_checkpoint": false,
+      "prompt": "The team added this: Engineering and Human Resources cannot be in the same floor.",
+      "phase": "late",
+      "constraints_introduced": [
+        "C12"
+      ],
+      "active_constraint_ids": [
+        "C01",
+        "C02",
+        "C03",
+        "C04",
+        "C05",
+        "C06",
+        "C07",
+        "C08",
+        "C09",
+        "C10",
+        "C11",
+        "C_trap",
+        "C12"
+      ],
+      "n_active_constraints": 13
+    },
+    {
+      "turn_number": 17,
+      "is_checkpoint": true,
+      "prompt": "With all changes and new requirements, produce an updated plan. If any constraints conflict, flag them explicitly.",
+      "phase": "checkpoint",
+      "constraints_introduced": [],
+      "ground_truth": {
+        "reference_assignment": {
+          "sales": "fl2",
+          "design": "fl1",
+          "product": "fl5",
+          "mktg": "fl3",
+          "hr": "fl1",
+          "eng": "fl4",
+          "finance": "fl2",
+          "legal": "fl3"
+        },
+        "reference_plan_text": "Current Plan:\nFloor 1: Design, Human Resources\nFloor 2: Sales, Finance\nFloor 3: Marketing, Legal\nFloor 4: Engineering\nFloor 5: Product",
+        "constraint_satisfaction": {
+          "C01": {
+            "satisfied": true
+          },
+          "C02": {
+            "satisfied": true
+          },
+          "C03": {
+            "satisfied": true
+          },
+          "C04": {
+            "satisfied": true
+          },
+          "C05": {
+            "satisfied": true
+          },
+          "C06": {
+            "satisfied": true
+          },
+          "C07": {
+            "satisfied": true
+          },
+          "C08": {
+            "satisfied": true
+          },
+          "C09": {
+            "satisfied": true
+          },
+          "C10": {
+            "satisfied": true
+          },
+          "C11": {
+            "satisfied": true
+          },
+          "C_trap": {
+            "satisfied": false,
+            "is_conflict": true,
+            "expected_behavior": "flag_conflict",
+            "scoring": {
+              "flagged": 1.0,
+              "silent_correct": 0.75,
+              "silent_wrong": 0.25,
+              "both_violated": 0.0
+            },
+            "conflict_reason": "Product and Engineering were together in Floor 5 before the modification but are now separated."
+          },
+          "C12": {
+            "satisfied": true
+          }
+        },
+        "n_satisfied": 12,
+        "n_total": 13,
+        "n_conflicts": 1
+      },
+      "active_constraint_ids": [
+        "C01",
+        "C02",
+        "C03",
+        "C04",
+        "C05",
+        "C06",
+        "C07",
+        "C08",
+        "C09",
+        "C10",
+        "C11",
+        "C_trap",
+        "C12"
+      ],
+      "n_active_constraints": 13
+    },
+    {
+      "turn_number": 18,
+      "is_checkpoint": false,
+      "prompt": "This is non-negotiable: The total headcount in any single floor must not exceed 35 people.",
+      "phase": "stress",
+      "constraints_introduced": [
+        "C13"
+      ],
+      "active_constraint_ids": [
+        "C01",
+        "C02",
+        "C03",
+        "C04",
+        "C05",
+        "C06",
+        "C07",
+        "C08",
+        "C09",
+        "C10",
+        "C11",
+        "C_trap",
+        "C12",
+        "C13"
+      ],
+      "n_active_constraints": 14
+    },
+    {
+      "turn_number": 19,
+      "is_checkpoint": false,
+      "prompt": "This is non-negotiable: If Finance is placed on Floor 2, then Marketing must be placed on Floor 3.",
+      "phase": "stress",
+      "constraints_introduced": [
+        "C14"
+      ],
+      "active_constraint_ids": [
+        "C01",
+        "C02",
+        "C03",
+        "C04",
+        "C05",
+        "C06",
+        "C07",
+        "C08",
+        "C09",
+        "C10",
+        "C11",
+        "C_trap",
+        "C12",
+        "C13",
+        "C14"
+      ],
+      "n_active_constraints": 15
+    },
+    {
+      "turn_number": 20,
+      "is_checkpoint": true,
+      "prompt": "Produce your final plan. Then list every constraint we've discussed and state whether it is satisfied, violated, or in conflict with another constraint.",
+      "phase": "final_checkpoint",
+      "constraints_introduced": [],
+      "ground_truth": {
+        "reference_assignment": {
+          "sales": "fl2",
+          "design": "fl1",
+          "product": "fl5",
+          "mktg": "fl3",
+          "hr": "fl1",
+          "eng": "fl4",
+          "finance": "fl2",
+          "legal": "fl3"
+        },
+        "reference_plan_text": "Current Plan:\nFloor 1: Design, Human Resources\nFloor 2: Sales, Finance\nFloor 3: Marketing, Legal\nFloor 4: Engineering\nFloor 5: Product",
+        "constraint_satisfaction": {
+          "C01": {
+            "satisfied": true
+          },
+          "C02": {
+            "satisfied": true
+          },
+          "C03": {
+            "satisfied": true
+          },
+          "C04": {
+            "satisfied": true
+          },
+          "C05": {
+            "satisfied": true
+          },
+          "C06": {
+            "satisfied": true
+          },
+          "C07": {
+            "satisfied": true
+          },
+          "C08": {
+            "satisfied": true
+          },
+          "C09": {
+            "satisfied": true
+          },
+          "C10": {
+            "satisfied": true
+          },
+          "C11": {
+            "satisfied": true
+          },
+          "C_trap": {
+            "satisfied": false,
+            "is_conflict": true,
+            "expected_behavior": "flag_conflict",
+            "scoring": {
+              "flagged": 1.0,
+              "silent_correct": 0.75,
+              "silent_wrong": 0.25,
+              "both_violated": 0.0
+            },
+            "conflict_reason": "Product and Engineering were together in Floor 5 before the modification but are now separated."
+          },
+          "C12": {
+            "satisfied": true
+          },
+          "C13": {
+            "satisfied": true
+          },
+          "C14": {
+            "satisfied": true
+          }
+        },
+        "n_satisfied": 14,
+        "n_total": 15,
+        "n_conflicts": 1
+      },
+      "active_constraint_ids": [
+        "C01",
+        "C02",
+        "C03",
+        "C04",
+        "C05",
+        "C06",
+        "C07",
+        "C08",
+        "C09",
+        "C10",
+        "C11",
+        "C_trap",
+        "C12",
+        "C13",
+        "C14"
+      ],
+      "n_active_constraints": 15
+    }
+  ]
+}

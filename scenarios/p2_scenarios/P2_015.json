@@ -1,0 +1,789 @@
+{
+  "scenario_id": "P2_015",
+  "generator_version": "1.0.0",
+  "seed": 2026026615,
+  "domain": "travel",
+  "domain_display": "Travel Itinerary",
+  "n_items": 8,
+  "n_slots": 5,
+  "system_prompt": "You are a planning assistant. Help the user build and maintain a plan by incorporating all constraints they introduce. Track every constraint carefully. When asked to produce a plan, use this exact format:\n\nCurrent Plan:\n[Slot Name]: [Item 1], [Item 2]\n[Slot Name]: [Item 3]\n...\nUnassigned: [Item 7], [Item 8] (if any)\n\nList ALL slots even if empty. If a new constraint conflicts with an earlier one, flag the conflict explicitly.",
+  "solution_base": {
+    "walking_tour": "day3",
+    "museum": "day4",
+    "show": "day5",
+    "market": "day2",
+    "food_tour": "day5",
+    "beach": "day3",
+    "temple": "day1",
+    "hike": "day1"
+  },
+  "solution_modified": {
+    "walking_tour": "day3",
+    "museum": "day2",
+    "show": "day5",
+    "market": "day2",
+    "food_tour": "day5",
+    "beach": "day4",
+    "temple": "day1",
+    "hike": "day1"
+  },
+  "modification": {
+    "item": "beach",
+    "old_slot": "day3",
+    "new_slot": "day4",
+    "original_constraint_id": "C02",
+    "bumped_item": "museum",
+    "bumped_to": "day2"
+  },
+  "conflict": {
+    "id": "C_trap",
+    "type": "co_location",
+    "introduced_at_turn": 15,
+    "reason": "Walking Tour and Beach Excursion were together in Day 3 before the modification but are now separated."
+  },
+  "constraints": [
+    {
+      "type": "exclusion",
+      "item": "hike",
+      "slot": "day4",
+      "id": "C01"
+    },
+    {
+      "type": "fixed_assignment",
+      "item": "beach",
+      "slot": "day3",
+      "id": "C02"
+    },
+    {
+      "type": "exclusion",
+      "item": "beach",
+      "slot": "day2",
+      "id": "C03"
+    },
+    {
+      "type": "capacity",
+      "slot": "day1",
+      "max": 2,
+      "id": "C04"
+    },
+    {
+      "type": "exclusion",
+      "item": "museum",
+      "slot": "day3",
+      "id": "C05"
+    },
+    {
+      "type": "fixed_assignment",
+      "item": "temple",
+      "slot": "day1",
+      "id": "C06"
+    },
+    {
+      "type": "mutual_exclusion",
+      "item_a": "market",
+      "item_b": "beach",
+      "id": "C07"
+    },
+    {
+      "type": "mutual_exclusion",
+      "item_a": "market",
+      "item_b": "hike",
+      "id": "C08"
+    },
+    {
+      "type": "ordering",
+      "item_a": "beach",
+      "item_b": "show",
+      "id": "C09"
+    },
+    {
+      "type": "mutual_exclusion",
+      "item_a": "temple",
+      "item_b": "beach",
+      "id": "C10"
+    },
+    {
+      "type": "ordering",
+      "item_a": "walking_tour",
+      "item_b": "food_tour",
+      "id": "C11"
+    },
+    {
+      "type": "exclusion",
+      "item": "food_tour",
+      "slot": "day2",
+      "id": "C12"
+    },
+    {
+      "type": "co_location",
+      "item_a": "walking_tour",
+      "item_b": "beach",
+      "id": "C_trap"
+    },
+    {
+      "type": "sum_limit",
+      "property": "cost_usd",
+      "max_per_slot": 145,
+      "id": "C13"
+    },
+    {
+      "type": "conditional",
+      "if_item": "hike",
+      "if_slot": "day1",
+      "then_item": "walking_tour",
+      "then_slot": "day3",
+      "id": "C14"
+    }
+  ],
+  "turns": [
+    {
+      "turn_number": 1,
+      "is_checkpoint": false,
+      "prompt": "We're planning a 5-day trip with 8 activities across 5 days.\n\nHere are the activities:\n\n| Activity        | Cost($) | Energy(1-5) |\n| --------------- | ------- | ----------- |\n| Museum Visit    | 45      | 2           |\n| Walking Tour    | 30      | 4           |\n| Beach Excursion | 60      | 3           |\n| Mountain Hike   | 25      | 5           |\n| Local Market    | 20      | 2           |\n| Cultural Show   | 80      | 1           |\n| Food Tour       | 65      | 3           |\n| Temple Visit    | 15      | 2           |\n\nAvailable days (in order):\n\n| Day   | Capacity |\n| ----- | -------- |\n| Day 1 | 2        |\n| Day 2 | 2        |\n| Day 3 | 2        |\n| Day 4 | 1        |\n| Day 5 | 2        |\n\nFirst two requirements:\n1. Mountain Hike cannot be planned for Day 4.\n2. Beach Excursion must be planned for Day 3.\n\nWhat's your initial thinking?",
+      "phase": "setup",
+      "constraints_introduced": [
+        "C01",
+        "C02"
+      ],
+      "active_constraint_ids": [
+        "C01",
+        "C02"
+      ],
+      "n_active_constraints": 2
+    },
+    {
+      "turn_number": 2,
+      "is_checkpoint": false,
+      "prompt": "One more thing: Beach Excursion cannot be planned for Day 2.",
+      "phase": "easy",
+      "constraints_introduced": [
+        "C03"
+      ],
+      "active_constraint_ids": [
+        "C01",
+        "C02",
+        "C03"
+      ],
+      "n_active_constraints": 3
+    },
+    {
+      "turn_number": 3,
+      "is_checkpoint": false,
+      "prompt": "Keep in mind: Day 1 can hold at most 2 activities.",
+      "phase": "easy",
+      "constraints_introduced": [
+        "C04"
+      ],
+      "active_constraint_ids": [
+        "C01",
+        "C02",
+        "C03",
+        "C04"
+      ],
+      "n_active_constraints": 4
+    },
+    {
+      "turn_number": 4,
+      "is_checkpoint": false,
+      "prompt": "Additionally, Museum Visit cannot be planned for Day 3.",
+      "phase": "easy",
+      "constraints_introduced": [
+        "C05"
+      ],
+      "active_constraint_ids": [
+        "C01",
+        "C02",
+        "C03",
+        "C04",
+        "C05"
+      ],
+      "n_active_constraints": 5
+    },
+    {
+      "turn_number": 5,
+      "is_checkpoint": false,
+      "prompt": "Oh, and temple Visit must be planned for Day 1.",
+      "phase": "easy",
+      "constraints_introduced": [
+        "C06"
+      ],
+      "active_constraint_ids": [
+        "C01",
+        "C02",
+        "C03",
+        "C04",
+        "C05",
+        "C06"
+      ],
+      "n_active_constraints": 6
+    },
+    {
+      "turn_number": 6,
+      "is_checkpoint": true,
+      "prompt": "Let's see where we are. Produce a complete plan satisfying all constraints so far. Use the format:\n\nCurrent Plan:\n[Day]: [Activity 1], ...\n...\nUnassigned: (if any)",
+      "phase": "checkpoint",
+      "constraints_introduced": [],
+      "ground_truth": {
+        "reference_assignment": {
+          "walking_tour": "day3",
+          "museum": "day4",
+          "show": "day5",
+          "market": "day2",
+          "food_tour": "day5",
+          "beach": "day3",
+          "temple": "day1",
+          "hike": "day1"
+        },
+        "reference_plan_text": "Current Plan:\nDay 1: Temple Visit, Mountain Hike\nDay 2: Local Market\nDay 3: Walking Tour, Beach Excursion\nDay 4: Museum Visit\nDay 5: Cultural Show, Food Tour",
+        "constraint_satisfaction": {
+          "C01": {
+            "satisfied": true
+          },
+          "C02": {
+            "satisfied": true
+          },
+          "C03": {
+            "satisfied": true
+          },
+          "C04": {
+            "satisfied": true
+          },
+          "C05": {
+            "satisfied": true
+          },
+          "C06": {
+            "satisfied": true
+          }
+        },
+        "n_satisfied": 6,
+        "n_total": 6,
+        "n_conflicts": 0
+      },
+      "active_constraint_ids": [
+        "C01",
+        "C02",
+        "C03",
+        "C04",
+        "C05",
+        "C06"
+      ],
+      "n_active_constraints": 6
+    },
+    {
+      "turn_number": 7,
+      "is_checkpoint": false,
+      "prompt": "This came up in a meeting: Local Market and Beach Excursion cannot be in the same day.",
+      "phase": "hard",
+      "constraints_introduced": [
+        "C07"
+      ],
+      "active_constraint_ids": [
+        "C01",
+        "C02",
+        "C03",
+        "C04",
+        "C05",
+        "C06",
+        "C07"
+      ],
+      "n_active_constraints": 7
+    },
+    {
+      "turn_number": 8,
+      "is_checkpoint": false,
+      "prompt": "This came up in a meeting: Local Market and Mountain Hike cannot be in the same day.",
+      "phase": "hard",
+      "constraints_introduced": [
+        "C08"
+      ],
+      "active_constraint_ids": [
+        "C01",
+        "C02",
+        "C03",
+        "C04",
+        "C05",
+        "C06",
+        "C07",
+        "C08"
+      ],
+      "n_active_constraints": 8
+    },
+    {
+      "turn_number": 9,
+      "is_checkpoint": false,
+      "prompt": "Firm requirement: Beach Excursion must be planned before Cultural Show.",
+      "phase": "hard",
+      "constraints_introduced": [
+        "C09"
+      ],
+      "active_constraint_ids": [
+        "C01",
+        "C02",
+        "C03",
+        "C04",
+        "C05",
+        "C06",
+        "C07",
+        "C08",
+        "C09"
+      ],
+      "n_active_constraints": 9
+    },
+    {
+      "turn_number": 10,
+      "is_checkpoint": false,
+      "prompt": "Before we finalize, can you list all the constraints we've established so far?",
+      "phase": "recall",
+      "constraints_introduced": [],
+      "ground_truth": {
+        "scoring_type": "constraint_recall",
+        "expected_constraints": [
+          "C01",
+          "C02",
+          "C03",
+          "C04",
+          "C05",
+          "C06",
+          "C07",
+          "C08",
+          "C09"
+        ],
+        "n_expected": 9
+      },
+      "active_constraint_ids": [
+        "C01",
+        "C02",
+        "C03",
+        "C04",
+        "C05",
+        "C06",
+        "C07",
+        "C08",
+        "C09"
+      ],
+      "n_active_constraints": 9
+    },
+    {
+      "turn_number": 11,
+      "is_checkpoint": true,
+      "prompt": "Produce an updated plan incorporating all constraints. Same format as before.",
+      "phase": "checkpoint",
+      "constraints_introduced": [],
+      "ground_truth": {
+        "reference_assignment": {
+          "walking_tour": "day3",
+          "museum": "day4",
+          "show": "day5",
+          "market": "day2",
+          "food_tour": "day5",
+          "beach": "day3",
+          "temple": "day1",
+          "hike": "day1"
+        },
+        "reference_plan_text": "Current Plan:\nDay 1: Temple Visit, Mountain Hike\nDay 2: Local Market\nDay 3: Walking Tour, Beach Excursion\nDay 4: Museum Visit\nDay 5: Cultural Show, Food Tour",
+        "constraint_satisfaction": {
+          "C01": {
+            "satisfied": true
+          },
+          "C02": {
+            "satisfied": true
+          },
+          "C03": {
+            "satisfied": true
+          },
+          "C04": {
+            "satisfied": true
+          },
+          "C05": {
+            "satisfied": true
+          },
+          "C06": {
+            "satisfied": true
+          },
+          "C07": {
+            "satisfied": true
+          },
+          "C08": {
+            "satisfied": true
+          },
+          "C09": {
+            "satisfied": true
+          }
+        },
+        "n_satisfied": 9,
+        "n_total": 9,
+        "n_conflicts": 0
+      },
+      "active_constraint_ids": [
+        "C01",
+        "C02",
+        "C03",
+        "C04",
+        "C05",
+        "C06",
+        "C07",
+        "C08",
+        "C09"
+      ],
+      "n_active_constraints": 9
+    },
+    {
+      "turn_number": 12,
+      "is_checkpoint": false,
+      "prompt": "There's been a change. Beach Excursion needs to be planned for Day 4 instead of Day 3. Please note this \u2014 we'll update the full plan soon.",
+      "phase": "modification",
+      "constraints_introduced": [],
+      "modification": {
+        "replaces": "C02",
+        "item": "beach",
+        "old_slot": "day3",
+        "new_slot": "day4"
+      },
+      "active_constraint_ids": [
+        "C01",
+        "C02",
+        "C03",
+        "C04",
+        "C05",
+        "C06",
+        "C07",
+        "C08",
+        "C09"
+      ],
+      "n_active_constraints": 9
+    },
+    {
+      "turn_number": 13,
+      "is_checkpoint": false,
+      "prompt": "After discussion, we also need: Temple Visit and Beach Excursion cannot be in the same day.",
+      "phase": "late",
+      "constraints_introduced": [
+        "C10"
+      ],
+      "active_constraint_ids": [
+        "C01",
+        "C02",
+        "C03",
+        "C04",
+        "C05",
+        "C06",
+        "C07",
+        "C08",
+        "C09",
+        "C10"
+      ],
+      "n_active_constraints": 10
+    },
+    {
+      "turn_number": 14,
+      "is_checkpoint": false,
+      "prompt": "The team added this: Walking Tour must be planned before Food Tour.",
+      "phase": "late",
+      "constraints_introduced": [
+        "C11"
+      ],
+      "active_constraint_ids": [
+        "C01",
+        "C02",
+        "C03",
+        "C04",
+        "C05",
+        "C06",
+        "C07",
+        "C08",
+        "C09",
+        "C10",
+        "C11"
+      ],
+      "n_active_constraints": 11
+    },
+    {
+      "turn_number": 15,
+      "is_checkpoint": false,
+      "prompt": "The team added this: Walking Tour and Beach Excursion must be in the same day.",
+      "phase": "late",
+      "constraints_introduced": [
+        "C_trap"
+      ],
+      "active_constraint_ids": [
+        "C01",
+        "C02",
+        "C03",
+        "C04",
+        "C05",
+        "C06",
+        "C07",
+        "C08",
+        "C09",
+        "C10",
+        "C11",
+        "C_trap"
+      ],
+      "n_active_constraints": 12
+    },
+    {
+      "turn_number": 16,
+      "is_checkpoint": false,
+      "prompt": "Another requirement: Food Tour cannot be planned for Day 2.",
+      "phase": "late",
+      "constraints_introduced": [
+        "C12"
+      ],
+      "active_constraint_ids": [
+        "C01",
+        "C02",
+        "C03",
+        "C04",
+        "C05",
+        "C06",
+        "C07",
+        "C08",
+        "C09",
+        "C10",
+        "C11",
+        "C_trap",
+        "C12"
+      ],
+      "n_active_constraints": 13
+    },
+    {
+      "turn_number": 17,
+      "is_checkpoint": true,
+      "prompt": "With all changes and new requirements, produce an updated plan. If any constraints conflict, flag them explicitly.",
+      "phase": "checkpoint",
+      "constraints_introduced": [],
+      "ground_truth": {
+        "reference_assignment": {
+          "walking_tour": "day3",
+          "museum": "day2",
+          "show": "day5",
+          "market": "day2",
+          "food_tour": "day5",
+          "beach": "day4",
+          "temple": "day1",
+          "hike": "day1"
+        },
+        "reference_plan_text": "Current Plan:\nDay 1: Temple Visit, Mountain Hike\nDay 2: Museum Visit, Local Market\nDay 3: Walking Tour\nDay 4: Beach Excursion\nDay 5: Cultural Show, Food Tour",
+        "constraint_satisfaction": {
+          "C01": {
+            "satisfied": true
+          },
+          "C02": {
+            "satisfied": true
+          },
+          "C03": {
+            "satisfied": true
+          },
+          "C04": {
+            "satisfied": true
+          },
+          "C05": {
+            "satisfied": true
+          },
+          "C06": {
+            "satisfied": true
+          },
+          "C07": {
+            "satisfied": true
+          },
+          "C08": {
+            "satisfied": true
+          },
+          "C09": {
+            "satisfied": true
+          },
+          "C10": {
+            "satisfied": true
+          },
+          "C11": {
+            "satisfied": true
+          },
+          "C_trap": {
+            "satisfied": false,
+            "is_conflict": true,
+            "expected_behavior": "flag_conflict",
+            "scoring": {
+              "flagged": 1.0,
+              "silent_correct": 0.75,
+              "silent_wrong": 0.25,
+              "both_violated": 0.0
+            },
+            "conflict_reason": "Walking Tour and Beach Excursion were together in Day 3 before the modification but are now separated."
+          },
+          "C12": {
+            "satisfied": true
+          }
+        },
+        "n_satisfied": 12,
+        "n_total": 13,
+        "n_conflicts": 1
+      },
+      "active_constraint_ids": [
+        "C01",
+        "C02",
+        "C03",
+        "C04",
+        "C05",
+        "C06",
+        "C07",
+        "C08",
+        "C09",
+        "C10",
+        "C11",
+        "C_trap",
+        "C12"
+      ],
+      "n_active_constraints": 13
+    },
+    {
+      "turn_number": 18,
+      "is_checkpoint": false,
+      "prompt": "Final requirement: The total cost in any single day must not exceed 145 USD.",
+      "phase": "stress",
+      "constraints_introduced": [
+        "C13"
+      ],
+      "active_constraint_ids": [
+        "C01",
+        "C02",
+        "C03",
+        "C04",
+        "C05",
+        "C06",
+        "C07",
+        "C08",
+        "C09",
+        "C10",
+        "C11",
+        "C_trap",
+        "C12",
+        "C13"
+      ],
+      "n_active_constraints": 14
+    },
+    {
+      "turn_number": 19,
+      "is_checkpoint": false,
+      "prompt": "One more to factor in: If Mountain Hike is planned for Day 1, then Walking Tour must be planned for Day 3.",
+      "phase": "stress",
+      "constraints_introduced": [
+        "C14"
+      ],
+      "active_constraint_ids": [
+        "C01",
+        "C02",
+        "C03",
+        "C04",
+        "C05",
+        "C06",
+        "C07",
+        "C08",
+        "C09",
+        "C10",
+        "C11",
+        "C_trap",
+        "C12",
+        "C13",
+        "C14"
+      ],
+      "n_active_constraints": 15
+    },
+    {
+      "turn_number": 20,
+      "is_checkpoint": true,
+      "prompt": "Produce your final plan. Then list every constraint we've discussed and state whether it is satisfied, violated, or in conflict with another constraint.",
+      "phase": "final_checkpoint",
+      "constraints_introduced": [],
+      "ground_truth": {
+        "reference_assignment": {
+          "walking_tour": "day3",
+          "museum": "day2",
+          "show": "day5",
+          "market": "day2",
+          "food_tour": "day5",
+          "beach": "day4",
+          "temple": "day1",
+          "hike": "day1"
+        },
+        "reference_plan_text": "Current Plan:\nDay 1: Temple Visit, Mountain Hike\nDay 2: Museum Visit, Local Market\nDay 3: Walking Tour\nDay 4: Beach Excursion\nDay 5: Cultural Show, Food Tour",
+        "constraint_satisfaction": {
+          "C01": {
+            "satisfied": true
+          },
+          "C02": {
+            "satisfied": true
+          },
+          "C03": {
+            "satisfied": true
+          },
+          "C04": {
+            "satisfied": true
+          },
+          "C05": {
+            "satisfied": true
+          },
+          "C06": {
+            "satisfied": true
+          },
+          "C07": {
+            "satisfied": true
+          },
+          "C08": {
+            "satisfied": true
+          },
+          "C09": {
+            "satisfied": true
+          },
+          "C10": {
+            "satisfied": true
+          },
+          "C11": {
+            "satisfied": true
+          },
+          "C_trap": {
+            "satisfied": false,
+            "is_conflict": true,
+            "expected_behavior": "flag_conflict",
+            "scoring": {
+              "flagged": 1.0,
+              "silent_correct": 0.75,
+              "silent_wrong": 0.25,
+              "both_violated": 0.0
+            },
+            "conflict_reason": "Walking Tour and Beach Excursion were together in Day 3 before the modification but are now separated."
+          },
+          "C12": {
+            "satisfied": true
+          },
+          "C13": {
+            "satisfied": true
+          },
+          "C14": {
+            "satisfied": true
+          }
+        },
+        "n_satisfied": 14,
+        "n_total": 15,
+        "n_conflicts": 1
+      },
+      "active_constraint_ids": [
+        "C01",
+        "C02",
+        "C03",
+        "C04",
+        "C05",
+        "C06",
+        "C07",
+        "C08",
+        "C09",
+        "C10",
+        "C11",
+        "C_trap",
+        "C12",
+        "C13",
+        "C14"
+      ],
+      "n_active_constraints": 15
+    }
+  ]
+}
