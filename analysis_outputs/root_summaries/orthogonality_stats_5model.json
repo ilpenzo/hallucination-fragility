@@ -1,0 +1,180 @@
+{
+  "description": "Kendall's W and Spearman correlations \u2014 post Gemini P1 fix",
+  "n_models": 5,
+  "models": [
+    "claude-sonnet-4.5",
+    "deepseek-r1",
+    "gemini-2.5-pro",
+    "gpt-4o",
+    "minimax-m2.5"
+  ],
+  "metrics_used": {
+    "claude-sonnet-4.5": {
+      "P1_probe": 0.995,
+      "P2_satisfaction": 0.8316,
+      "P3_gap_abstained": 0.885,
+      "P3_fabrication_rate": 0.05
+    },
+    "deepseek-r1": {
+      "P1_probe": 0.995,
+      "P2_satisfaction": 0.9606,
+      "P3_gap_abstained": 0.875,
+      "P3_fabrication_rate": 0.1
+    },
+    "gemini-2.5-pro": {
+      "P1_probe": 0.965,
+      "P2_satisfaction": 0.7825,
+      "P3_gap_abstained": 0.93,
+      "P3_fabrication_rate": 0.0
+    },
+    "gpt-4o": {
+      "P1_probe": 0.955,
+      "P2_satisfaction": 0.7854,
+      "P3_gap_abstained": 0.875,
+      "P3_fabrication_rate": 0.1
+    },
+    "minimax-m2.5": {
+      "P1_probe": 0.89,
+      "P2_satisfaction": 0.8616,
+      "P3_gap_abstained": 0.975,
+      "P3_fabrication_rate": 0.0
+    }
+  },
+  "rankings": {
+    "claude-sonnet-4.5": {
+      "P1_rank": 1.5,
+      "P2_rank": 3.0,
+      "P3_gap_rank": 3.0,
+      "P3_fab_rank": 3.0
+    },
+    "deepseek-r1": {
+      "P1_rank": 1.5,
+      "P2_rank": 1.0,
+      "P3_gap_rank": 4.5,
+      "P3_fab_rank": 4.5
+    },
+    "gemini-2.5-pro": {
+      "P1_rank": 3.0,
+      "P2_rank": 5.0,
+      "P3_gap_rank": 2.0,
+      "P3_fab_rank": 1.5
+    },
+    "gpt-4o": {
+      "P1_rank": 4.0,
+      "P2_rank": 4.0,
+      "P3_gap_rank": 4.5,
+      "P3_fab_rank": 4.5
+    },
+    "minimax-m2.5": {
+      "P1_rank": 5.0,
+      "P2_rank": 2.0,
+      "P3_gap_rank": 1.0,
+      "P3_fab_rank": 1.5
+    }
+  },
+  "rank_table": [
+    {
+      "model": "MiniMax M2.5",
+      "P1_rank": 5.0,
+      "P2_rank": 2.0,
+      "P3_rank": 1.0,
+      "spread": 4.0
+    },
+    {
+      "model": "DeepSeek-R1",
+      "P1_rank": 1.5,
+      "P2_rank": 1.0,
+      "P3_rank": 4.5,
+      "spread": 3.5
+    },
+    {
+      "model": "Gemini 2.5 Pro",
+      "P1_rank": 3.0,
+      "P2_rank": 5.0,
+      "P3_rank": 2.0,
+      "spread": 3.0
+    },
+    {
+      "model": "Sonnet 4.5",
+      "P1_rank": 1.5,
+      "P2_rank": 3.0,
+      "P3_rank": 3.0,
+      "spread": 1.5
+    },
+    {
+      "model": "GPT-4o",
+      "P1_rank": 4.0,
+      "P2_rank": 4.0,
+      "P3_rank": 4.5,
+      "spread": 0.5
+    }
+  ],
+  "kendalls_w": {
+    "primary_3metrics": {
+      "metrics": [
+        "P1_probe",
+        "P2_satisfaction",
+        "P3_gap_abstained"
+      ],
+      "W": 0.2278,
+      "chi2": 2.733,
+      "df": 4,
+      "p_value": 0.6034
+    },
+    "sensitivity_fabrication": {
+      "metrics": [
+        "P1_probe",
+        "P2_satisfaction",
+        "P3_fabrication_rate"
+      ],
+      "W": 0.2111,
+      "chi2": 2.533,
+      "df": 4,
+      "p_value": 0.6387
+    },
+    "sensitivity_all4": {
+      "metrics": [
+        "P1_probe",
+        "P2_satisfaction",
+        "P3_gap_abstained",
+        "P3_fabrication_rate"
+      ],
+      "W": 0.2125,
+      "chi2": 3.4,
+      "df": 4,
+      "p_value": 0.4932
+    }
+  },
+  "spearman_correlations": {
+    "P1_probe \u00d7 P2_satisfaction": {
+      "rho": 0.2052,
+      "p_value": 0.7406
+    },
+    "P1_probe \u00d7 P3_gap_abstained": {
+      "rho": -0.5,
+      "p_value": 0.391
+    },
+    "P1_probe \u00d7 P3_fabrication_rate": {
+      "rho": -0.4056,
+      "p_value": 0.4982
+    },
+    "P2_satisfaction \u00d7 P3_gap_abstained": {
+      "rho": -0.1539,
+      "p_value": 0.8048
+    },
+    "P2_satisfaction \u00d7 P3_fabrication_rate": {
+      "rho": -0.3162,
+      "p_value": 0.6042
+    },
+    "P3_gap_abstained \u00d7 P3_fabrication_rate": {
+      "rho": 0.9733,
+      "p_value": 0.0052
+    }
+  },
+  "comparison_with_old": {
+    "old_W_primary": 0.089,
+    "old_P1xP2_rho": -0.051,
+    "old_P1xP3_rho": -0.895,
+    "old_P2xP3_rho": -0.154
+  }
+}

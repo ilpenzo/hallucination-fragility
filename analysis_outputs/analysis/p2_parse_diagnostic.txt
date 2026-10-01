@@ -1,0 +1,501 @@
+================================================================================
+P2 PARSER FAILURE DIAGNOSTIC
+================================================================================
+
+--- PART 1: Parse Count Distribution by Model ---
+
+  claude-sonnet-4.5:
+    Total checkpoints: 160
+    0 items parsed:    30 (19%)
+    1-3 items parsed:  9 (6%)
+    4-7 items parsed:  3 (2%)
+    8 items parsed:    118 (74%)
+
+  deepseek-r1:
+    Total checkpoints: 160
+    0 items parsed:    0 (0%)
+    1-3 items parsed:  0 (0%)
+    4-7 items parsed:  1 (1%)
+    8 items parsed:    159 (99%)
+
+  gemini-2.5-pro:
+    Total checkpoints: 128
+    0 items parsed:    19 (15%)
+    1-3 items parsed:  23 (18%)
+    4-7 items parsed:  19 (15%)
+    8 items parsed:    67 (52%)
+
+  gpt-4o:
+    Total checkpoints: 160
+    0 items parsed:    2 (1%)
+    1-3 items parsed:  80 (50%)
+    4-7 items parsed:  44 (28%)
+    8 items parsed:    34 (21%)
+
+  minimax-m2.5:
+    Total checkpoints: 160
+    0 items parsed:    5 (3%)
+    1-3 items parsed:  3 (2%)
+    4-7 items parsed:  11 (7%)
+    8 items parsed:    141 (88%)
+
+
+--- PART 2: Sample ZERO-PARSE Responses (raw text) ---
+
+  claude-sonnet-4.5: 30 zero-parse entries. Sampling 3:
+
+    ---- P2_002 T17 (1250 chars) ----
+    | ## Attempting to Produce Updated Plan:
+    | 
+    | 🚩 **CRITICAL CONFLICT - IMPOSSIBLE TO SATISFY ALL CONSTRAINTS**
+    | 
+    | ### Conflict Analysis:
+    | 
+    | **Constraint 1:** Closing Remarks → Tuesday Morning
+    | **Constraint 2:** Team Building Activity → Tuesday Morning  
+    | **Constraint 12:** Closing Remarks and Research Talks must be in the same time block
+    | 
+    | **Result:** These three constraints require placing 3 sessions in Tuesday Morning:
+    | - Closing Remarks (Constraint 1)
+    | - Team Building Activity (Constraint 2)
+    | - Research Talks (derived from Constraints 1 + 12)
+    | 
+    | **Tuesday Morning capacity: 2 sessions**
+    | **Required sessions: 3 sessions**
+    | 
+    | **OVERFLOW: Need 3 slots, only 2 available**
+    | 
+    | ---
+    | 
+    | ## Cannot Produce Valid Plan
+    | 
+    | The current constraint set is **mathematically impossible** to satisfy. Tuesday Morning cannot hold 3 sessions when its capacity is only 2.
+    | 
+    | ### Resolution Options:
+    | 
+    | **Option A:** Remove/modify Constraint 1 (move Closing Remarks to different time block)
+    | **Option B:** Remove/modify Constraint 2 (move Team Building Activity to different time block)  
+    | **Option C:** Remove Constraint 12 (allow Closing Remarks and Research Talks to be separate)
+    | **Option D:** Increase Tuesday Morning capacity to 3 sessions
+    | 
+    | **Which constraint should be relaxed to proceed?**
+
+    ---- P2_003 T6 (467 chars) ----
+    | I need to clarify the Monday Afternoon capacity conflict before producing a complete plan.
+    | 
+    | **Conflict:** 
+    | - Original table states Monday Afternoon capacity = 2
+    | - Later you said "Monday Afternoon can hold at most 3 sessions"
+    | 
+    | I cannot produce a valid plan without knowing which is correct. 
+    | 
+    | **Please confirm:** What is the actual capacity for Monday Afternoon - 2 or 3 sessions?
+    | 
+    | Once you clarify, I'll immediately produce a complete plan satisfying all constraints.
+
+    ---- P2_003 T11 (505 chars) ----
+    | I cannot produce a valid plan due to an **unresolved conflict**:
+    | 
+    | **CONFLICT:**
+    | - Original capacity table: Monday Afternoon = 2 slots
+    | - Later statement: "Monday Afternoon can hold at most 3 sessions"
+    | 
+    | **These contradict each other.** I need you to clarify which capacity is correct before I can produce a valid plan.
+    | 
+    | **Please specify:** Is Monday Afternoon capacity **2** or **3** sessions?
+    | 
+    | Once you confirm, I will immediately produce a complete plan in the requested format satisfying all constraints.
+
+----------------------------------------------------------------------
+
+  deepseek-r1: No zero-parse entries ✓
+
+  gemini-2.5-pro: 19 zero-parse entries. Sampling 3:
+
+    ---- P2_002 T17 (2382 chars) ----
+    | I cannot produce an updated plan because the new requirements you have introduced create several direct and unresolvable conflicts with previous constraints.
+    | 
+    | Here is a breakdown of the conflicts:
+    | 
+    | **CONFLICT 1: CONTRADICTORY PLACEMENT**
+    | 
+    | *   **Original Constraint:** "Closing Remarks must be scheduled in Monday Afternoon."
+    | *   **New Constraint:** "Closing Remarks needs to be scheduled in Tuesday Morning."
+    | 
+    | These two constraints are mutually exclusive. The Closing Remarks cannot be in two different time blocks. You must decide which of these is the correct rule to follow.
+    | 
+    | ---
+    | 
+    | **CONFLICT 2: SLOT CAPACITY VIOLATION**
+    | 
+    | This conflict arises from the interaction of three different constraints if we assume the *new* placement for Closing Remarks is the one you want to use:
+    | 
+    | *   **Constraint A:** "Closing Remarks needs to be scheduled in Tuesday Morning."
+    | *   **Constraint B:** "Team Building Activity must be scheduled in Tuesday Morning." (This is a fixed requirement from the beginning).
+    | *   **Constraint C:** "Closing Remarks and Research Talks must be in the same time block."
+    | 
+    | To satisfy all three, **Team Building Activity**, **Closing Remarks**, and **Research Talks** must all be placed in Tuesday Morning. However, the Tuesday Morning time block has a maximum capacity of 2 sessions. Placing 3 sessions there is impossible.
+    | 
+    | ---
+    | 
+    | **CONFLICT 3: ORDERING VIOLATION**
+    | 
+    | This conflict also occurs if we try to place Closing Remarks in Tuesday Morning:
+    | 
+    | *   **Constraint A:** "Closing Remar
+    |     ... [truncated, total 2382 chars]
+
+    ---- P2_003 T17 (837 chars) ----
+    | I cannot produce an updated plan because there is a direct and unresolved conflict among your constraints.
+    | 
+    | **Conflict Identified:**
+    | 
+    | The plan is currently impossible to build due to these three conflicting requirements:
+    | 
+    | 1.  **Location Constraint:** "Research Talks needs to be scheduled in **Tuesday Afternoon**."
+    | 2.  **Capacity Constraint:** The initial setup states the capacity of the **Tuesday Afternoon** time block is **1 session**.
+    | 3.  **Grouping Constraint:** "Research Talks and Closing Remarks must be in the **same time block**."
+    | 
+    | It is logically impossible to place two sessions (Research Talks and Closing Remarks) into the Tuesday Afternoon time block, which can only hold one session.
+    | 
+    | To create a valid plan, you must modify at least one of these conflicting constraints. Please advise on how you would like to proceed.
+
+    ---- P2_003 T20 (4428 chars) ----
+    | As requested, here is the final analysis.
+    | 
+    | ### Final Plan
+    | 
+    | A final plan cannot be produced. The set of constraints you have provided contains a direct, unsolvable conflict.
+    | 
+    | **Conflict Identified:**
+    | 
+    | The plan is impossible to build because these three requirements are mutually exclusive:
+    | 
+    | 1.  **Location Constraint:** "Research Talks needs to be scheduled in **Tuesday Afternoon**."
+    | 2.  **Capacity Constraint:** The initial setup states the capacity of the **Tuesday Afternoon** time block is **1 session**.
+    | 3.  **Grouping Constraint:** "Research Talks and Closing Remarks must be in the **same time block**."
+    | 
+    | It is logically impossible to place two sessions into a time block that can only hold one. To create a valid plan, at least one of these three constraints must be changed.
+    | 
+    | ---
+    | 
+    | ### Constraint Analysis
+    | 
+    | Here is a list of every constraint we have discussed and its current status.
+    | 
+    | #### **Initial Setup & Capacities**
+    | 
+    | *   **Constraint:** Monday Morning capacity: 2 sessions
+    |     *   **Status:** Not part of the conflict.
+    | *   **Constraint:** Monday Afternoon capacity: 2 sessions
+    |     *   **Status:** Not part of the conflict. (Note: A later rule allowed "at most 3", which is compatible with 2).
+    | *   **Constraint:** Tuesday Morning capacity: 2 sessions
+    |     *   **Status:** Not part of the conflict.
+    | *   **Constraint:** Tuesday Afternoon capacity: 1 session
+    |     *   **Status:** **In Conflict**. This is one of the three core constraints causing the failure. It prevents the "Research Talks" 
+    |     ... [truncated, total 4428 chars]
+
+----------------------------------------------------------------------
+
+  gpt-4o: 2 zero-parse entries. Sampling 2:
+
+    ---- P2_023 T20 (3531 chars) ----
+    | Here is the **final plan** based on all constraints, followed by a detailed analysis of whether each constraint is satisfied, violated, or in conflict with another constraint.
+    | 
+    | ---
+    | 
+    | ### Final Plan:
+    | #### Sprint 1:
+    | - **Notification Service** (5 points)  
+    |   **Total**: 5 points  
+    | 
+    | #### Sprint 2:
+    | - **Mobile App** (13 points)  
+    | - **Search Engine** (5 points)  
+    |   **Total**: 18 points  
+    | 
+    | #### Sprint 3:
+    | - **Payment System** (13 points)  
+    | - **API Gateway** (8 points)  
+    | - **Analytics Module** (8 points)  
+    |   **Total**: 29 points  
+    | 
+    | #### Sprint 4:
+    | - **User Authentication** (8 points)  
+    |   **Total**: 8 points  
+    | 
+    | #### Sprint 5:
+    | - **Dashboard UI** (13 points)  
+    |   **Total**: 13 points  
+    | 
+    | ---
+    | 
+    | ### Constraints Analysis:
+    | 1. **Dashboard UI cannot be scheduled in Sprint 3.**  
+    |    - **Satisfied**: Dashboard UI is scheduled in Sprint 5.
+    | 
+    | 2. **Sprint 2 can hold at most 3 features.**  
+    |    - **Satisfied**: Sprint 2 has 2 features (Mobile App, Search Engine).
+    | 
+    | 3. **Payment System must be scheduled in Sprint 3.**  
+    |    - **Satisfied**: Payment System is scheduled in Sprint 3.
+    | 
+    | 4. **Notification Service must be scheduled in Sprint 1.**  
+    |    - **Satisfied**: Notification Service is scheduled in Sprint 1.
+    | 
+    | 5. **Analytics Module cannot be scheduled in Sprint 1.**  
+    |    - **Satisfied**: Analytics Module is scheduled in Sprint 3.
+    | 
+    | 6. **Analytics Module cannot be scheduled in Sprint 5.**  
+    |    - **Satisfied**: Analytics Module is scheduled in Sprint 3.
+    | 
+    | 7. **Search Engine must be scheduled before Payment System.** 
+    |     ... [truncated, total 3531 chars]
+
+    ---- P2_037 T17 (1803 chars) ----
+    | ### Updated Plan:
+    | Floor 1: Human Resources, Product, Legal  
+    | Floor 2:  
+    | Floor 3:  
+    | Floor 4:  
+    | Floor 5:  
+    | Unassigned: Engineering, Marketing, Sales, Finance, Design  
+    | 
+    | ### Conflict Check:
+    | Let’s review all constraints against the current plan:
+    | 
+    | 1. **Product must be placed on Floor 1.** ✅ Satisfied.  
+    | 2. **Marketing cannot be placed on Floor 5.** ✅ No conflict; Marketing is unassigned.  
+    | 3. **Sales cannot be placed on Floor 4.** ✅ No conflict; Sales is unassigned.  
+    | 4. **Floor 3 can hold at most 3 teams.** ✅ No conflict; Floor 3 is empty.  
+    | 5. **Product cannot be placed on Floor 2.** ✅ Satisfied; Product is on Floor 1.  
+    | 6. **Human Resources must be placed on Floor 1.** ✅ Satisfied.  
+    | 7. **Design and Engineering cannot be on the same floor.** ✅ No conflict; both are unassigned.  
+    | 8. **Product must be placed on a lower floor than Design.** ✅ No conflict; Product is on Floor 1, and Design is unassigned but must go to Floor 2, 3, 4, or 5.  
+    | 9. **Sales and Design cannot be on the same floor.** ✅ No conflict; both are unassigned.  
+    | 10. **Engineering and Product cannot be on the same floor.** ✅ Satisfied; Product is on Floor 1, and Engineering cannot go there.  
+    | 11. **Sales must be placed on a lower floor than Finance.** ✅ No conflict; both are unassigned.  
+    | 12. **Product and Legal must be on the same floor.** ✅ Satisfied; both are on Floor 1.  
+    | 13. **Marketing cannot be placed on Floor 4.** ✅ No conflict; Marketing is unassigned.
+    | 
+    | ### Observations:
+    | - The current plan satisfies all co
+    |     ... [truncated, total 1803 chars]
+
+----------------------------------------------------------------------
+
+  minimax-m2.5: 5 zero-parse entries. Sampling 3:
+
+    ---- P2_002 T17 (4760 chars) ----
+    | <think>
+    | Let me carefully analyze all the constraints and see if there's a way to produce a valid schedule or if there are unresolvable conflicts.
+    | 
+    | Current constraints:
+    | 1. Closing Remarks → Tuesday Morning
+    | 2. Team Building Activity → Tuesday Morning
+    | 3. Data Science Workshop cannot be scheduled in Monday Afternoon
+    | 4. Keynote Address cannot be scheduled in Tuesday Morning
+    | 5. Wednesday Morning can hold at most 2 sessions
+    | 6. Keynote Address cannot be scheduled in Wednesday Morning
+    | 7. Closing Remarks must be scheduled before Product Demo
+    | 8. Research Talks and AI Ethics Panel cannot be in the same time block
+    | 9. Data Science Workshop and Research Talks cannot be in the same time block
+    | 10. Data Science Workshop cannot be scheduled in Tuesday Morning
+    | 11. Data Science Workshop and Product Demo cannot be in the same time block
+    | 12. Closing Remarks and Research Talks must be in the same time block
+    | 13. Keynote Address must be scheduled before Networking Session
+    | 
+    | Let me analyze Constraint 12 + Constraints 1, 2:
+    | - Closing Remarks → Tuesday Morning
+    | - Team Building Activity → Tuesday Morning
+    | - Tuesday Morning capacity = 2
+    | 
+    | This means Tuesday Morning is FULL. For Constraint 12 (Closing Remarks and Research Talks in same time block), Research Talks would also need to be in Tuesday Morning, but there's no room.
+    | 
+    | This is a fundamental conflict. Let me see if there's any way around it...
+    | 
+    | Wait, let me re-read the original capacity table:
+    | | Time Block        | Capacity |
+    | | ----------------- | -------
+    |     ... [truncated, total 4760 chars]
+
+    ---- P2_022 T17 (3689 chars) ----
+    | <think>
+    | Let me re-read all the constraints and see if there's a way to resolve the conflicts.
+    | 
+    | Current constraints:
+    | 1. Sprint 5 can hold at most 3 features.
+    | 2. Dashboard UI cannot be scheduled in Sprint 1.
+    | 3. Mobile App cannot be scheduled in Sprint 3.
+    | 4. User Authentication cannot be scheduled in Sprint 2.
+    | 5. Notification Service must be scheduled in Sprint 2.
+    | 6. API Gateway must be scheduled in Sprint 2.
+    | 7. User Authentication and API Gateway cannot be in the same sprint.
+    | 8. Payment System must be scheduled before Dashboard UI.
+    | 9. Analytics Module and Payment System cannot be in the same sprint.
+    | 10. Search Engine must be scheduled before User Authentication.
+    | 11. Notification Service and User Authentication cannot be in the same sprint.
+    | 12. Analytics Module and Notification Service must be in the same sprint.
+    | 13. Payment System cannot be scheduled in Sprint 5.
+    | 
+    | Let me analyze the conflicts:
+    | 
+    | Conflict 1: Sprint 2 has two mandatory features (Notification Service and API Gateway) that must be there. But constraint 12 says Analytics Module must be in the same sprint as Notification Service, which would require Analytics Module in Sprint 2 as well. That's 3 features in Sprint 2 with capacity 2.
+    | 
+    | Wait, let me re-read constraint 5 and 6:
+    | - 5. Notification Service must be scheduled in Sprint 2.
+    | - 6. API Gateway must be scheduled in Sprint 2.
+    | 
+    | And constraint 12:
+    | - 12. Analytics Module and Notification Service must be in the same sprint.
+    | 
+    | So if Notification Service is in Sprint 2, the
+    |     ... [truncated, total 3689 chars]
+
+    ---- P2_030 T17 (2954 chars) ----
+    | <think>
+    | Let me analyze all the constraints and see if there's a way to resolve the conflicts:
+    | 
+    | 1. Hasan Ali → Week 2 (mandatory)
+    | 2. Bob Kumar ≠ Week 4
+    | 3. Grace Liu ≠ Week 4
+    | 4. Elena Volkov → Week 4
+    | 5. Week 2 ≤ 1 candidate
+    | 6. David Park ≠ Week 1
+    | 7. Grace Liu and David Park cannot be in the same interview week
+    | 8. Grace Liu and Elena Volkov cannot be in the same interview week
+    | 9. Frank Osei must be interviewed before Bob Kumar
+    | 10. David Park and Alice Chen cannot be in the same interview week
+    | 11. Frank Osei cannot be scheduled for Week 3
+    | 12. Elena Volkov and Alice Chen must be in the same interview week
+    | 13. David Park must be interviewed before Grace Liu
+    | 
+    | Let me check the capacity:
+    | - Week 1: 2 capacity
+    | - Week 2: 1 capacity (≤1)
+    | - Week 3: 2 capacity
+    | - Week 4: 1 capacity
+    | - Week 5: 2 capacity
+    | Total: 8 slots
+    | 
+    | The conflict is:
+    | - Elena Volkov → Week 4 (constraint 4)
+    | - Elena Volkov and Alice Chen must be in the same week (constraint 12)
+    | - Week 4 capacity is 1
+    | 
+    | This is a direct conflict. There's no way to put both Elena Volkov and Alice Chen in Week 4 when Week 4 only has capacity 1.
+    | 
+    | Wait, let me re-read the constraints. Maybe I misunderstood something.
+    | 
+    | Constraint 4 says "Elena Volkov → Week 4" - this is stated as a requirement from stakeholders.
+    | 
+    | Constraint 12 says "Elena Volkov and Alice Chen must be in the same interview week."
+    | 
+    | These two constraints directly conflict with Week 4's capacity of 1.
+    | 
+    | So I need to flag this conflict explicitly and ask for resolution.
+    | 
+    | Let me list the c
+    |     ... [truncated, total 2954 chars]
+
+----------------------------------------------------------------------
+
+
+--- PART 3: GPT-4o Early Checkpoint Responses (low parse count) ---
+
+  GPT-4o T6 entries with ≤3 items parsed: 37
+
+    ---- P2_001 T6 (parsed 2/8 items) ----
+    | Here is the complete plan so far, satisfying all constraints provided:
+    | 
+    | ### Current Plan:
+    | Monday Morning: 
+    | Monday Afternoon: 
+    | Tuesday Morning: 
+    | Tuesday Afternoon: Data Science Workshop
+    | Wednesday Morning: Team Building Activity
+    | Unassigned: Keynote Address, AI Ethics Panel, Networking Session, Product Demo, Research Talks, Closing Remarks
+    | 
+    | This plan adheres to all constraints:
+    | 1. **Monday Afternoon can hold at most 2 sessions.**
+    | 2. **Networking Session cannot be scheduled in Tuesday Morning.**
+    | 3. **Data Science Workshop must be scheduled in Tuesday Afternoon.**
+    | 4. **Closing Remarks cannot be scheduled in Monday Morning.**
+    | 5. **Team Building Activity must be scheduled in Wednesday Morning.**
+    | 6. **Networking Session cannot be scheduled in Wednesday Morning.**
+    | 
+    | Let me know if you'd like me to proceed with further assignments or adjustments!
+
+    ---- P2_002 T6 (parsed 2/8 items) ----
+    | Here’s the complete plan so far, satisfying all constraints:
+    | 
+    | Current Plan:
+    | Monday Morning: 
+    | Monday Afternoon: Closing Remarks
+    | Tuesday Morning: Team Building Activity
+    | Tuesday Afternoon: 
+    | Wednesday Morning: 
+    | Unassigned: Keynote Address, AI Ethics Panel, Data Science Workshop, Networking Session, Product Demo, Research Talks
+    | 
+    | Constraints:
+    | 1. Closing Remarks must be scheduled in Monday Afternoon.
+    | 2. Team Building Activity must be scheduled in Tuesday Morning.
+    | 3. Data Science Workshop cannot be scheduled in Monday Afternoon.
+    | 4. Keynote Address cannot be scheduled in Tuesday Morning.
+    | 5. Wednesday Morning can hold at most 2 sessions.
+    | 6. Keynote Address cannot be scheduled in Wednesday Morning.
+    | 
+    | This is the current state of the plan. Let me know if you'd like to proceed with assigning the remaining sessions or introduce additional constraints!
+
+    ---- P2_003 T6 (parsed 2/8 items) ----
+    | Here’s the complete plan so far, satisfying all constraints:
+    | 
+    | Current Plan:
+    | Monday Morning: 
+    | Monday Afternoon: Networking Session
+    | Tuesday Morning: 
+    | Tuesday Afternoon: 
+    | Wednesday Morning: Research Talks
+    | Unassigned: Keynote Address, AI Ethics Panel, Data Science Workshop, Product Demo, Team Building Activity, Closing Remarks
+    | 
+    | Let me know if you'd like me to start assigning the remaining sessions or add more constraints!
+
+
+--- PART 4: DeepSeek-R1 T6 Response (high parse, for comparison) ---
+
+    ---- P2_001 T6 (parsed 8/8 items) ----
+    | Current Plan:
+    | Monday Morning: Networking Session, AI Ethics Panel
+    | Monday Afternoon: Keynote Address, Product Demo
+    | Tuesday Morning: Research Talks
+    | Tuesday Afternoon: Data Science Workshop
+    | Wednesday Morning: Team Building Activity, Closing Remarks
+    | Unassigned: None
+    | 
+    | All constraints satisfied:
+    | - Capacities respected: Monday Morning (2), Monday Afternoon (2), Tuesday Morning (1 ≤ 2), Tuesday Afternoon (1), Wednesday Morning (2).
+    | - Networking Session not in Tuesday Morning or Wednesday Morning.
+    | - Closing Remarks not in Monday Morning.
+    | - Data Science Workshop in Tuesday Afternoon.
+    | - Team Building Activity in Wednesday Morning.
+
+
+--- PART 5: Scenarios with Parsing Problems Across Multiple Models ---
+
+  Scenario+turn combos where 2+ models parsed 0 items:
+    P2_002 T17: 3 models had 0 items parsed
+    P2_003 T17: 2 models had 0 items parsed
+    P2_007 T17: 2 models had 0 items parsed
+    P2_013 T17: 2 models had 0 items parsed
+    P2_013 T20: 2 models had 0 items parsed
+    P2_014 T17: 2 models had 0 items parsed
+    P2_014 T20: 2 models had 0 items parsed
+    P2_029 T17: 2 models had 0 items parsed
+    P2_030 T17: 2 models had 0 items parsed
+    P2_030 T20: 2 models had 0 items parsed
+    P2_037 T17: 3 models had 0 items parsed
+
+  Per-scenario mean parse count (averaged across all models and checkpoints):
+
+  Scenarios with mean parse < 4.0 (likely problematic):
+    P2_019: mean_parsed=3.7 (n=20 checkpoints)
